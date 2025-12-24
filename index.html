@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>نيشا | معجنات مختارة</title>
+
+  <style>
+    :root{
+      --green:#4F6F52;
+      --beige:#F3ECDC;
+      --glass: rgba(243,236,220,.10);
+      --stroke: rgba(243,236,220,.22);
+      --shadow: 0 14px 35px rgba(0,0,0,.22);
+      --r: 22px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+      background: linear-gradient(180deg, #3f5d43, var(--green));
+      color: var(--beige);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+    }
+
+    .wrap{
+      width:min(520px, 100%);
+      display:grid;
+      gap:14px;
+    }
+
+    .brand{
+      border:1px solid var(--stroke);
+      background: var(--glass);
+      border-radius: var(--r);
+      padding:20px;
+      box-shadow: var(--shadow);
+      text-align:center;
+    }
+
+    .logoImg{
+      width:200px;
+      margin:0 auto 10px;
+      display:block;
+    }
+
+    h1{
+      margin:0;
+      font-size: 30px;
+    }
+
+    p{
+      margin:6px 0 0;
+      font-size:14px;
+      opacity:.9;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+
+    .cardBtn{
+      border:1px solid var(--stroke);
+      background: rgba(243,236,220,.08);
+      border-radius: var(--r);
+      padding:16px;
+      text-align:center;
+      cursor:pointer;
+      transition:.15s;
+    }
+
+    .cardBtn:hover{
+      transform: translateY(-2px);
+      background: rgba(243,236,220,.12);
+    }
+
+    .ico{
+      width:52px;
+      height:52px;
+      margin:0 auto 8px;
+      border-radius:16px;
+      background: var(--beige);
+      color: var(--green);
+      display:grid;
+      place-items:center;
+      font-size:26px;
+      font-weight:900;
+    }
+
+    .label{
+      font-weight:800;
+      font-size:14px;
+    }
+
+    .hint{
+      font-size:12px;
+      opacity:.8;
+    }
+
+    .social{
+      border:1px solid var(--stroke);
+      background: var(--glass);
+      border-radius: var(--r);
+      padding:14px;
+      text-align:center;
+    }
+
+    .socialRow{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .sBtn{
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      padding:10px 14px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      text-decoration:none;
+      color:var(--beige);
+      background: rgba(243,236,220,.08);
+    }
+
+    .sIcon{
+      width:26px;
+      height:26px;
+      border-radius:10px;
+      background: var(--beige);
+      color: var(--green);
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      font-size:12px;
+    }
+
+    .modalBack{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.45);
+      display:none;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .modal{
+      background: rgba(20,20,20,.4);
+      backdrop-filter: blur(10px);
+      border-radius:22px;
+      padding:16px;
+      width:min(420px, 100%);
+      border:1px solid rgba(255,255,255,.2);
+    }
+
+    .modalBtns{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .mBtn{
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.2);
+      background: rgba(243,236,220,.1);
+      color:var(--beige);
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    @media(max-width:420px){
+      .grid{ grid-template-columns:1fr; }
+      .modalBtns{ grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="wrap">
+
+  <section class="brand">
+    <!-- الشعار -->
+    <img src="logo.png" alt="Neesha Logo" class="logoImg">
+    <h1>نيشا</h1>
+    
+  </section>
+
+  <section class="grid">
+
+    <div class="cardBtn" id="btnMenu">
+      <div class="ico">☰</div>
+      <div class="label">المنيو</div>
+      <div class="hint">قريبًا</div>
+    </div>
+
+    <div class="cardBtn" id="btnContact">
+      <div class="ico">☎</div>
+      <div class="label">تواصل معنا</div>
+      <div class="hint">اتصال / واتساب</div>
+    </div>
+
+    <div class="cardBtn" onclick="window.open('https://obad-omar.github.io/naisha/')">
+      <div class="ico">🛒</div>
+      <div class="label">اطلب الآن</div>
+      <div class="hint">طلبات مباشرة</div>
+    </div>
+
+    <div class="cardBtn" onclick="window.open('https://maps.app.goo.gl/mtrAv6emZHgRy5oV9')">
+      <div class="ico">📍</div>
+      <div class="label">موقعنا</div>
+      <div class="hint">افتح الخريطة</div>
+    </div>
+
+  </section>
+
+  <section class="social">
+    <div class="socialRow">
+      <a class="sBtn" href="https://www.instagram.com/zwylftyr" target="_blank">
+        <span class="sIcon">IG</span>إنستغرام
+      </a>
+      <a class="sBtn" href="https://www.tiktok.com/@z_0556608699" target="_blank">
+        <span class="sIcon">TT</span>تيك توك
+      </a>
+      <a class="sBtn" href="https://www.snapchat.com/add/zawytalfatera" target="_blank">
+        <span class="sIcon">SC</span>سناب
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- نافذة التواصل -->
+<div class="modalBack" id="modalBack">
+  <div class="modal">
+    <div class="modalBtns">
+      <button class="mBtn" onclick="location.href='tel:+966558608699'">📞 اتصال</button>
+      <button class="mBtn" onclick="window.open('https://wa.me/966558608699?text=السلام عليكم، أبي أطلب من نيشا')">💬 واتساب</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 🔴 هنا تحط رابط المنيو لاحقًا
+  // مثال:
+  // const MENU_URL = "https://drive.google.com/.....";
+
+  const btnMenu = document.getElementById("btnMenu");
+  const btnContact = document.getElementById("btnContact");
+  const modalBack = document.getElementById("modalBack");
+
+  btnMenu.onclick = () => {
+    alert("المنيو قيد الإضافة");
+  };
+
+  btnContact.onclick = () => {
+    modalBack.style.display = "flex";
+  };
+
+  modalBack.onclick = (e) => {
+    if(e.target === modalBack) modalBack.style.display = "none";
+  };
+</script>
+
+</body>
+</html>
