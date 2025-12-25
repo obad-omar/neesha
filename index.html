@@ -27,12 +27,15 @@
       align-items:center;
       justify-content:center;
       padding:18px;
+      overflow:hidden; /* عشان الثلج ما يطلع برا */
     }
 
     .wrap{
       width:min(520px, 100%);
       display:grid;
       gap:14px;
+      position:relative;
+      z-index:2; /* فوق الثلج */
     }
 
     .brand{
@@ -42,6 +45,7 @@
       padding:20px;
       box-shadow: var(--shadow);
       text-align:center;
+      backdrop-filter: blur(8px);
     }
 
     .logoImg{
@@ -75,6 +79,7 @@
       text-align:center;
       cursor:pointer;
       transition:.15s;
+      backdrop-filter: blur(8px);
     }
 
     .cardBtn:hover{
@@ -111,6 +116,7 @@
       border-radius: var(--r);
       padding:14px;
       text-align:center;
+      backdrop-filter: blur(8px);
     }
 
     .socialRow{
@@ -130,6 +136,7 @@
       text-decoration:none;
       color:var(--beige);
       background: rgba(243,236,220,.08);
+      backdrop-filter: blur(8px);
     }
 
     .sIcon{
@@ -151,6 +158,8 @@
       display:none;
       align-items:center;
       justify-content:center;
+      z-index:3;
+      padding:18px;
     }
 
     .modal{
@@ -182,10 +191,21 @@
       .grid{ grid-template-columns:1fr; }
       .modalBtns{ grid-template-columns:1fr; }
     }
+
+    /* ====== طبقة الثلج ====== */
+    #snow{
+      position:fixed;
+      inset:0;
+      z-index:1;
+      pointer-events:none; /* لا يمنع الضغط على الأزرار */
+    }
   </style>
 </head>
 
 <body>
+
+<!-- Canvas للثلج -->
+<canvas id="snow"></canvas>
 
 <main class="wrap">
 
@@ -193,7 +213,6 @@
     <!-- الشعار -->
     <img src="logo.png" alt="Neesha Logo" class="logoImg">
     <h1>نيشا</h1>
-    
   </section>
 
   <section class="grid">
@@ -201,7 +220,7 @@
     <div class="cardBtn" id="btnMenu">
       <div class="ico">☰</div>
       <div class="label">المنيو</div>
-      <div class="hint">قريبًا</div>
+      <div class="hint">افتح المنيو</div>
     </div>
 
     <div class="cardBtn" id="btnContact">
@@ -226,13 +245,13 @@
 
   <section class="social">
     <div class="socialRow">
-      <a class="sBtn" href="https://www.instagram.com/zwylftyr" target="_blank">
+      <a class="sBtn" href="https://www.instagram.com/zwylftyr" target="_blank" rel="noopener">
         <span class="sIcon">IG</span>إنستغرام
       </a>
-      <a class="sBtn" href="https://www.tiktok.com/@z_0556608699" target="_blank">
+      <a class="sBtn" href="https://www.tiktok.com/@z_0556608699" target="_blank" rel="noopener">
         <span class="sIcon">TT</span>تيك توك
       </a>
-      <a class="sBtn" href="https://www.snapchat.com/add/zawytalfatera" target="_blank">
+      <a class="sBtn" href="https://www.snapchat.com/add/zawytalfatera" target="_blank" rel="noopener">
         <span class="sIcon">SC</span>سناب
       </a>
     </div>
@@ -245,31 +264,94 @@
   <div class="modal">
     <div class="modalBtns">
       <button class="mBtn" onclick="location.href='tel:+966558608699'">📞 اتصال</button>
-      <button class="mBtn" onclick="window.open('https://wa.me/966558608699?text=السلام عليكم، أبي أطلب من نيشا')">💬 واتساب</button>
+      <button class="mBtn" id="waBtn">💬 واتساب</button>
     </div>
   </div>
 </div>
 
 <script>
-  // 🔴 هنا تحط رابط المنيو لاحقًا
-  // مثال:
-  // const MENU_URL = "https://drive.google.com/.....";
+  // ✅ رابط المنيو (تم وضعه)
+  const MENU_URL = "https://drive.google.com/file/d/1k98PH8q53LaclyuUdgT6ay_vhG5GCYa8/view?usp=drivesdk";
 
   const btnMenu = document.getElementById("btnMenu");
   const btnContact = document.getElementById("btnContact");
   const modalBack = document.getElementById("modalBack");
+  const waBtn = document.getElementById("waBtn");
 
-  btnMenu.onclick = () => {
-    alert("المنيو قيد الإضافة");
-  };
+  // فتح المنيو
+  btnMenu.onclick = () => window.open(MENU_URL, "_blank", "noopener");
 
+  // تواصل
   btnContact.onclick = () => {
     modalBack.style.display = "flex";
   };
-
   modalBack.onclick = (e) => {
     if(e.target === modalBack) modalBack.style.display = "none";
   };
+
+  // واتساب (ترميز عربي صحيح)
+  waBtn.onclick = () => {
+    const msg = encodeURIComponent("السلام عليكم، أبي أطلب من نيشا");
+    window.open(`https://wa.me/966558608699?text=${msg}`, "_blank", "noopener");
+  };
+
+  /* =========================
+     ✅ ثلج كثيف (تقدر تزوده)
+     عدّل SNOW_COUNT لزيادة الثلج
+  ========================== */
+  const canvas = document.getElementById("snow");
+  const ctx = canvas.getContext("2d");
+
+  function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  const SNOW_COUNT = 180; // 🔥 زودها (مثلاً 240) لو تبي ثلج أكثر
+  const snow = [];
+
+  function rand(min, max){ return Math.random() * (max - min) + min; }
+
+  function initSnow(){
+    snow.length = 0;
+    for(let i=0;i<SNOW_COUNT;i++){
+      snow.push({
+        x: rand(0, canvas.width),
+        y: rand(0, canvas.height),
+        r: rand(1.2, 3.6),
+        s: rand(0.6, 2.2),      // سرعة نزول
+        w: rand(-0.6, 0.6)      // تمايل
+      });
+    }
+  }
+  initSnow();
+
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = "rgba(243,236,220,.85)"; // لون الثلج (بيج فاتح)
+
+    for(const f of snow){
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+      ctx.fill();
+
+      f.y += f.s;
+      f.x += f.w;
+
+      // إعادة التدوير
+      if(f.y > canvas.height + 10){
+        f.y = -10;
+        f.x = rand(0, canvas.width);
+      }
+      if(f.x < -10) f.x = canvas.width + 10;
+      if(f.x > canvas.width + 10) f.x = -10;
+    }
+
+    requestAnimationFrame(draw);
+  }
+  draw();
 </script>
 
 </body>
