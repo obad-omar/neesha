@@ -17,17 +17,22 @@
 
     *{ box-sizing:border-box; }
 
+    html, body{ height:100%; }
+
     body{
       margin:0;
       font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
       background: linear-gradient(180deg, #3f5d43, var(--green));
       color: var(--beige);
       min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+
+      /* ✅ مهم: لا تستخدم flex هنا (يسبب مشاكل سكرول بأندرويد) */
+      display:block;
+
       padding:18px;
-      overflow:hidden; /* عشان الثلج ما يطلع برا */
+      overflow-x:hidden;
+      overflow-y:auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .wrap{
@@ -36,6 +41,8 @@
       gap:14px;
       position:relative;
       z-index:2; /* فوق الثلج */
+      margin: 0 auto;
+      padding: 18px 0 44px;
     }
 
     .brand{
@@ -45,7 +52,6 @@
       padding:20px;
       box-shadow: var(--shadow);
       text-align:center;
-      backdrop-filter: blur(8px);
     }
 
     .logoImg{
@@ -79,7 +85,6 @@
       text-align:center;
       cursor:pointer;
       transition:.15s;
-      backdrop-filter: blur(8px);
     }
 
     .cardBtn:hover{
@@ -116,7 +121,6 @@
       border-radius: var(--r);
       padding:14px;
       text-align:center;
-      backdrop-filter: blur(8px);
     }
 
     .socialRow{
@@ -136,7 +140,6 @@
       text-decoration:none;
       color:var(--beige);
       background: rgba(243,236,220,.08);
-      backdrop-filter: blur(8px);
     }
 
     .sIcon{
@@ -158,17 +161,16 @@
       display:none;
       align-items:center;
       justify-content:center;
-      z-index:3;
+      z-index:4;
       padding:18px;
     }
 
     .modal{
-      background: rgba(20,20,20,.4);
-      backdrop-filter: blur(10px);
+      background: rgba(20,20,20,.55);
       border-radius:22px;
       padding:16px;
       width:min(420px, 100%);
-      border:1px solid rgba(255,255,255,.2);
+      border:1px solid rgba(255,255,255,.18);
     }
 
     .modalBtns{
@@ -192,166 +194,199 @@
       .modalBtns{ grid-template-columns:1fr; }
     }
 
+    /* ✅ blur بس للأجهزة اللي تدعمه كويس (يخفف ثقل أندرويد) */
+    .brand, .cardBtn, .social{ backdrop-filter:none; -webkit-backdrop-filter:none; }
+    @supports ((-webkit-backdrop-filter: blur(8px)) or (backdrop-filter: blur(8px))){
+      .brand, .cardBtn, .social, .modal{
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+    }
+
     /* ====== طبقة الثلج ====== */
     #snow{
       position:fixed;
       inset:0;
       z-index:1;
-      pointer-events:none; /* لا يمنع الضغط على الأزرار */
+      pointer-events:none; /* لا يمنع الضغط */
     }
   </style>
 </head>
 
 <body>
 
-<!-- Canvas للثلج -->
-<canvas id="snow"></canvas>
+  <!-- Canvas للثلج -->
+  <canvas id="snow"></canvas>
 
-<main class="wrap">
+  <main class="wrap">
 
-  <section class="brand">
-    <!-- الشعار -->
-    <img src="logo.png" alt="Neesha Logo" class="logoImg">
-    <h1>نيشا</h1>
-  </section>
+    <section class="brand">
+      <img src="logo.png" alt="Neesha Logo" class="logoImg">
+      <h1>نيشا</h1>
+      <p>معجنات مختارة</p>
+    </section>
 
-  <section class="grid">
+    <section class="grid">
 
-    <div class="cardBtn" id="btnMenu">
-      <div class="ico">☰</div>
-      <div class="label">المنيو</div>
-      <div class="hint">افتح المنيو</div>
-    </div>
+      <div class="cardBtn" id="btnMenu">
+        <div class="ico">☰</div>
+        <div class="label">المنيو</div>
+        <div class="hint">افتح المنيو</div>
+      </div>
 
-    <div class="cardBtn" id="btnContact">
-      <div class="ico">☎</div>
-      <div class="label">تواصل معنا</div>
-      <div class="hint">اتصال / واتساب</div>
-    </div>
+      <div class="cardBtn" id="btnContact">
+        <div class="ico">☎</div>
+        <div class="label">تواصل معنا</div>
+        <div class="hint">اتصال / واتساب</div>
+      </div>
 
-    <div class="cardBtn" onclick="window.open('https://obad-omar.github.io/naisha/')">
-      <div class="ico">🛒</div>
-      <div class="label">اطلب الآن</div>
-      <div class="hint">طلبات مباشرة</div>
-    </div>
+      <div class="cardBtn" id="btnOrder">
+        <div class="ico">🛒</div>
+        <div class="label">اطلب الآن</div>
+        <div class="hint">طلبات مباشرة</div>
+      </div>
 
-    <div class="cardBtn" onclick="window.open('https://maps.app.goo.gl/mtrAv6emZHgRy5oV9')">
-      <div class="ico">📍</div>
-      <div class="label">موقعنا</div>
-      <div class="hint">افتح الخريطة</div>
-    </div>
+      <div class="cardBtn" id="btnMap">
+        <div class="ico">📍</div>
+        <div class="label">موقعنا</div>
+        <div class="hint">افتح الخريطة</div>
+      </div>
 
-  </section>
+    </section>
 
-  <section class="social">
-    <div class="socialRow">
-      <a class="sBtn" href="https://www.instagram.com/zwylftyr" target="_blank" rel="noopener">
-        <span class="sIcon">IG</span>إنستغرام
-      </a>
-      <a class="sBtn" href="https://www.tiktok.com/@z_0556608699" target="_blank" rel="noopener">
-        <span class="sIcon">TT</span>تيك توك
-      </a>
-      <a class="sBtn" href="https://www.snapchat.com/add/zawytalfatera" target="_blank" rel="noopener">
-        <span class="sIcon">SC</span>سناب
-      </a>
-    </div>
-  </section>
+    <section class="social">
+      <div class="socialRow">
+        <a class="sBtn" href="https://www.instagram.com/zwylftyr" target="_blank" rel="noopener">
+          <span class="sIcon">IG</span>إنستغرام
+        </a>
+        <a class="sBtn" href="https://www.tiktok.com/@z_0556608699" target="_blank" rel="noopener">
+          <span class="sIcon">TT</span>تيك توك
+        </a>
+        <a class="sBtn" href="https://www.snapchat.com/add/zawytalfatera" target="_blank" rel="noopener">
+          <span class="sIcon">SC</span>سناب
+        </a>
+      </div>
+    </section>
 
-</main>
+  </main>
 
-<!-- نافذة التواصل -->
-<div class="modalBack" id="modalBack">
-  <div class="modal">
-    <div class="modalBtns">
-      <button class="mBtn" onclick="location.href='tel:+966558608699'">📞 اتصال</button>
-      <button class="mBtn" id="waBtn">💬 واتساب</button>
+  <!-- نافذة التواصل -->
+  <div class="modalBack" id="modalBack">
+    <div class="modal">
+      <div class="modalBtns">
+        <button class="mBtn" onclick="location.href='tel:+966558608699'">📞 اتصال</button>
+        <button class="mBtn" id="waBtn">💬 واتساب</button>
+      </div>
     </div>
   </div>
-</div>
 
-<script>
-  // ✅ رابط المنيو (تم وضعه)
-  const MENU_URL = "https://drive.google.com/file/d/1Gk4Rrit1ermjQy2fptvvtN_Mj3Qmrf_P/view?usp=sharing";
-  const btnMenu = document.getElementById("btnMenu");
-  const btnContact = document.getElementById("btnContact");
-  const modalBack = document.getElementById("modalBack");
-  const waBtn = document.getElementById("waBtn");
+  <script>
+    // ✅ روابط
+    const MENU_URL  = "https://drive.google.com/file/d/1Gk4Rrit1ermjQy2fptvvtN_Mj3Qmrf_P/view?usp=sharing";
+    const ORDER_URL = "https://obad-omar.github.io/naisha/";
+    const MAP_URL   = "https://maps.app.goo.gl/mtrAv6emZHgRy5oV9";
 
-  // فتح المنيو
-  btnMenu.onclick = () => window.open(MENU_URL, "_blank", "noopener");
+    const btnMenu    = document.getElementById("btnMenu");
+    const btnContact = document.getElementById("btnContact");
+    const btnOrder   = document.getElementById("btnOrder");
+    const btnMap     = document.getElementById("btnMap");
 
-  // تواصل
-  btnContact.onclick = () => {
-    modalBack.style.display = "flex";
-  };
-  modalBack.onclick = (e) => {
-    if(e.target === modalBack) modalBack.style.display = "none";
-  };
+    const modalBack = document.getElementById("modalBack");
+    const waBtn     = document.getElementById("waBtn");
 
-  // واتساب (ترميز عربي صحيح)
-  waBtn.onclick = () => {
-    const msg = encodeURIComponent("السلام عليكم، أبي أطلب من نيشا");
-    window.open(`https://wa.me/966558608699?text=${msg}`, "_blank", "noopener");
-  };
+    // فتح المنيو
+    btnMenu.onclick  = () => window.open(MENU_URL, "_blank", "noopener");
+    btnOrder.onclick = () => window.open(ORDER_URL, "_blank", "noopener");
+    btnMap.onclick   = () => window.open(MAP_URL, "_blank", "noopener");
 
-  /* =========================
-     ✅ ثلج كثيف (تقدر تزوده)
-     عدّل SNOW_COUNT لزيادة الثلج
-  ========================== */
-  const canvas = document.getElementById("snow");
-  const ctx = canvas.getContext("2d");
+    // تواصل
+    btnContact.onclick = () => { modalBack.style.display = "flex"; };
+    modalBack.onclick = (e) => { if(e.target === modalBack) modalBack.style.display = "none"; };
 
-  function resize(){
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  window.addEventListener("resize", resize);
-  resize();
+    // واتساب
+    waBtn.onclick = () => {
+      const msg = encodeURIComponent("السلام عليكم، أبي أطلب من نيشا");
+      window.open(`https://wa.me/966558608699?text=${msg}`, "_blank", "noopener");
+    };
 
-  const SNOW_COUNT = 180; // 🔥 زودها (مثلاً 240) لو تبي ثلج أكثر
-  const snow = [];
+    /* =========================
+       ✅ ثلج أخف + متوافق أندرويد
+    ========================== */
+    const canvas = document.getElementById("snow");
+    const ctx = canvas.getContext("2d", { alpha: true });
 
-  function rand(min, max){ return Math.random() * (max - min) + min; }
-
-  function initSnow(){
-    snow.length = 0;
-    for(let i=0;i<SNOW_COUNT;i++){
-      snow.push({
-        x: rand(0, canvas.width),
-        y: rand(0, canvas.height),
-        r: rand(1.2, 3.6),
-        s: rand(0.6, 2.2),      // سرعة نزول
-        w: rand(-0.6, 0.6)      // تمايل
-      });
+    function resize(){
+      const dpr = Math.min(window.devicePixelRatio || 1, 2); // لا ترفعها كثير
+      canvas.width  = Math.floor(window.innerWidth  * dpr);
+      canvas.height = Math.floor(window.innerHeight * dpr);
+      canvas.style.width  = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+      ctx.setTransform(dpr,0,0,dpr,0,0);
     }
-  }
-  initSnow();
+    window.addEventListener("resize", () => { resize(); initSnow(); });
+    resize();
 
-  function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle = "rgba(243,236,220,.85)"; // لون الثلج (بيج فاتح)
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const prefersReduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    for(const f of snow){
-      ctx.beginPath();
-      ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
-      ctx.fill();
+    const SNOW_COUNT = prefersReduce ? 0 : (isAndroid ? 90 : 180);
+    const snow = [];
 
-      f.y += f.s;
-      f.x += f.w;
+    function rand(min, max){ return Math.random() * (max - min) + min; }
 
-      // إعادة التدوير
-      if(f.y > canvas.height + 10){
-        f.y = -10;
-        f.x = rand(0, canvas.width);
+    function initSnow(){
+      snow.length = 0;
+      if(SNOW_COUNT === 0) return;
+
+      for(let i=0;i<SNOW_COUNT;i++){
+        snow.push({
+          x: rand(0, window.innerWidth),
+          y: rand(0, window.innerHeight),
+          r: rand(1.1, 3.2),
+          s: rand(0.6, 2.0),
+          w: rand(-0.45, 0.45)
+        });
       }
-      if(f.x < -10) f.x = canvas.width + 10;
-      if(f.x > canvas.width + 10) f.x = -10;
+    }
+    initSnow();
+
+    let rafId = null;
+
+    function draw(){
+      ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+      ctx.fillStyle = "rgba(243,236,220,.85)";
+
+      for(const f of snow){
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+        ctx.fill();
+
+        f.y += f.s;
+        f.x += f.w;
+
+        if(f.y > window.innerHeight + 10){
+          f.y = -10;
+          f.x = rand(0, window.innerWidth);
+        }
+        if(f.x < -10) f.x = window.innerWidth + 10;
+        if(f.x > window.innerWidth + 10) f.x = -10;
+      }
+
+      rafId = requestAnimationFrame(draw);
     }
 
-    requestAnimationFrame(draw);
-  }
-  draw();
-</script>
+    if(SNOW_COUNT > 0) draw();
+
+    // يوقف الثلج لما الصفحة بالخلفية (يحسن الأداء)
+    document.addEventListener("visibilitychange", () => {
+      if(document.hidden){
+        if(rafId) cancelAnimationFrame(rafId);
+        rafId = null;
+      }else{
+        if(SNOW_COUNT > 0 && !rafId) draw();
+      }
+    });
+  </script>
 
 </body>
 </html>
