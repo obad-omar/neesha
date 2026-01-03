@@ -16,7 +16,6 @@
     }
 
     *{ box-sizing:border-box; }
-
     html, body{ height:100%; }
 
     body{
@@ -26,7 +25,7 @@
       color: var(--beige);
       min-height:100vh;
 
-      /* ✅ مهم: لا تستخدم flex هنا (يسبب مشاكل سكرول بأندرويد) */
+      /* ✅ مهم: لا تستخدم flex هنا */
       display:block;
 
       padding:18px;
@@ -194,7 +193,7 @@
       .modalBtns{ grid-template-columns:1fr; }
     }
 
-    /* ✅ blur بس للأجهزة اللي تدعمه كويس (يخفف ثقل أندرويد) */
+    /* ✅ blur بس للأجهزة اللي تدعمه كويس */
     .brand, .cardBtn, .social{ backdrop-filter:none; -webkit-backdrop-filter:none; }
     @supports ((-webkit-backdrop-filter: blur(8px)) or (backdrop-filter: blur(8px))){
       .brand, .cardBtn, .social, .modal{
@@ -208,7 +207,134 @@
       position:fixed;
       inset:0;
       z-index:1;
-      pointer-events:none; /* لا يمنع الضغط */
+      pointer-events:none;
+    }
+
+    /* =========================
+       ✅ آراء العملاء: سحب بيج + عبور كامل
+    ========================== */
+    .reviewsBox{
+      border:1px solid var(--stroke);
+      background: var(--glass);
+      border-radius: var(--r);
+      padding:16px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .reviewsHeader{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:10px;
+      gap:10px;
+    }
+
+    .reviewsHeader h3{
+      margin:0;
+      font-size:16px;
+      font-weight:900;
+    }
+
+    .addReviewBtn{
+      border:none;
+      background: var(--beige);
+      color: var(--green);
+      border-radius:999px;
+      padding:7px 12px;
+      font-weight:900;
+      cursor:pointer;
+      font-size:12px;
+      white-space:nowrap;
+    }
+
+    .reviewsTrack{
+      position:relative;
+      height:220px;
+      overflow:hidden;
+    }
+
+    .review{
+      position:absolute;
+      top: var(--y, 0px);
+
+      /* يبدأ من اليمين خارج الصندوق */
+      transform: translateX(var(--startX, 120%)) translateY(0);
+
+      max-width: 82%;
+      padding:10px 14px;
+
+      background: rgba(243,236,220,.96); /* ✅ بيج */
+      color: #2B2B2B;
+      border:1px solid rgba(79,111,82,.25);
+      border-radius: 999px;
+
+      font-size:13px;
+      line-height:1.5;
+
+      box-shadow: 0 12px 24px rgba(0,0,0,.22);
+      opacity:0;
+
+      pointer-events:none;
+      will-change: transform, opacity;
+    }
+
+    /* لمسة سحابة */
+    .review::before,
+    .review::after{
+      content:"";
+      position:absolute;
+      background: rgba(243,236,220,.96);
+      border:1px solid rgba(79,111,82,.18);
+      border-radius:999px;
+      z-index:-1;
+    }
+    .review::before{
+      width:22px; height:22px;
+      left:18px; top:-10px;
+    }
+    .review::after{
+      width:14px; height:14px;
+      left:42px; top:-6px;
+    }
+
+    /* تشغيل العبور */
+    .review.run{
+      animation: flyAcross var(--dur, 8s) linear forwards;
+    }
+
+    /* عبور كامل: يدخل -> يمر -> يختفي ويطلع */
+    @keyframes flyAcross{
+      0%{
+        opacity:0;
+        transform: translateX(120%) translateY(0);
+        filter: blur(.6px);
+      }
+      8%{
+        opacity:1;
+        transform: translateX(92%) translateY(var(--wobbleA, -2px));
+        filter: blur(0);
+      }
+      50%{
+        opacity:1;
+        transform: translateX(0%) translateY(var(--wobbleB, 2px));
+      }
+      92%{
+        opacity:.9;
+        transform: translateX(-92%) translateY(var(--wobbleA, -2px));
+      }
+      100%{
+        opacity:0;
+        transform: translateX(-120%) translateY(0);
+        filter: blur(.6px);
+      }
+    }
+
+    /* اختفاء فوري ناعم عند الحاجة (لو زدنا فوق 5) */
+    .review.softOut{
+      transition: opacity .45s ease, transform .45s ease;
+      opacity:0 !important;
+      transform: translateX(-120%) translateY(0) !important;
     }
   </style>
 </head>
@@ -268,6 +394,15 @@
       </div>
     </section>
 
+    <!-- ✅ آراء العملاء -->
+    <section class="reviewsBox">
+      <div class="reviewsHeader">
+        <h3>آراء عملائنا 💚</h3>
+        <button class="addReviewBtn" id="addReviewBtn">إضافة رأيك</button>
+      </div>
+      <div class="reviewsTrack" id="reviewsTrack" aria-label="Customer reviews"></div>
+    </section>
+
   </main>
 
   <!-- نافذة التواصل -->
@@ -310,13 +445,118 @@
     };
 
     /* =========================
+       ✅ آراء العملاء: عبور كامل + أماكن مختلفة
+    ========================== */
+    const reviewsTrack = document.getElementById("reviewsTrack");
+    const addReviewBtn = document.getElementById("addReviewBtn");
+
+    const reviews = [
+      "المعجنات طازجة والطعم رهيب 👌",
+      "أفضل فطائر في الحي والله 💚",
+      "سريع في الطلبات وتعاملهم ممتاز",
+      "الجبن عندهم يذوب ويفوز 😍",
+      "أكيد ما هي آخر مرة أطلب منهم"
+    ];
+
+    const activeReviews = []; // عناصر موجودة (حد 5)
+    let reviewIndex = 0;
+
+    function clamp(n,a,b){ return Math.max(a, Math.min(b, n)); }
+
+    function trackSize(){
+      const r = reviewsTrack.getBoundingClientRect();
+      return { w: r.width, h: r.height };
+    }
+
+    function rand(min,max){ return Math.random()*(max-min)+min; }
+
+    function makeReviewEl(text){
+      const el = document.createElement("div");
+      el.className = "review";
+      const clean = String(text || "").trim();
+      el.textContent = clean.length > 130 ? (clean.slice(0,130) + "…") : clean;
+      return el;
+    }
+
+    function placeAndRun(el){
+      const { w:tw, h:th } = trackSize();
+
+      // نقيس حجمه بعد إضافته بشكل مخفي لحساب max-width
+      el.style.opacity = "0";
+      el.style.pointerEvents = "none";
+      reviewsTrack.appendChild(el);
+      const br = el.getBoundingClientRect();
+      const ew = br.width;
+      const eh = br.height;
+
+      // مكان عمودي عشوائي داخل الصندوق
+      const y = clamp(rand(6, th - eh - 6), 6, Math.max(6, th - eh - 6));
+      el.style.setProperty("--y", y + "px");
+
+      // مدة وحركة تمايل بسيطة أثناء العبور
+      const dur = rand(7.2, 10.0).toFixed(2) + "s";
+      el.style.setProperty("--dur", dur);
+      el.style.setProperty("--wobbleA", (rand(-4, -1)).toFixed(1) + "px");
+      el.style.setProperty("--wobbleB", (rand(1, 4)).toFixed(1) + "px");
+
+      // بدء الحركة
+      requestAnimationFrame(() => {
+        el.classList.add("run");
+      });
+
+      // لما يخلص: احذف العنصر
+      el.addEventListener("animationend", () => {
+        const idx = activeReviews.indexOf(el);
+        if(idx !== -1) activeReviews.splice(idx, 1);
+        el.remove();
+      }, { once:true });
+
+      // ✅ حد أقصى 5: لو زاد، طلّع الأقدم بنعومة
+      activeReviews.push(el);
+      if(activeReviews.length > 5){
+        const old = activeReviews.shift();
+        if(old && old.isConnected){
+          old.classList.add("softOut");
+          setTimeout(() => {
+            if(old.isConnected) old.remove();
+          }, 480);
+        }
+      }
+    }
+
+    function spawnReview(text){
+      const el = makeReviewEl(text);
+      placeAndRun(el);
+    }
+
+    function loopReviews(){
+      spawnReview(reviews[reviewIndex]);
+      reviewIndex = (reviewIndex + 1) % reviews.length;
+    }
+
+    // بداية التشغيل
+    loopReviews();
+    setInterval(loopReviews, 2600);
+
+    // إضافة رأي جديد
+    addReviewBtn.onclick = () => {
+      const text = prompt("اكتب رأيك عن نيشا:");
+      if(!text) return;
+      const clean = text.trim();
+      if(clean.length < 4) return;
+
+      reviews.push(clean);
+      spawnReview(clean);
+    };
+
+    /* =========================
        ✅ ثلج أخف + متوافق أندرويد
     ========================== */
     const canvas = document.getElementById("snow");
     const ctx = canvas.getContext("2d", { alpha: true });
 
     function resize(){
-      const dpr = Math.min(window.devicePixelRatio || 1, 2); // لا ترفعها كثير
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width  = Math.floor(window.innerWidth  * dpr);
       canvas.height = Math.floor(window.innerHeight * dpr);
       canvas.style.width  = window.innerWidth + "px";
@@ -331,8 +571,6 @@
 
     const SNOW_COUNT = prefersReduce ? 0 : (isAndroid ? 90 : 180);
     const snow = [];
-
-    function rand(min, max){ return Math.random() * (max - min) + min; }
 
     function initSnow(){
       snow.length = 0;
@@ -377,7 +615,6 @@
 
     if(SNOW_COUNT > 0) draw();
 
-    // يوقف الثلج لما الصفحة بالخلفية (يحسن الأداء)
     document.addEventListener("visibilitychange", () => {
       if(document.hidden){
         if(rafId) cancelAnimationFrame(rafId);
