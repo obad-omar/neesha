@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
@@ -13,6 +14,10 @@
       --stroke: rgba(243,236,220,.22);
       --shadow: 0 14px 35px rgba(0,0,0,.22);
       --r: 22px;
+
+      /* ذهبي للثلج ولمسات رمضان */
+      --gold: rgba(212,175,55,.88);
+      --goldSoft: rgba(212,175,55,.55);
     }
 
     *{ box-sizing:border-box; }
@@ -25,9 +30,7 @@
       color: var(--beige);
       min-height:100vh;
 
-      /* ✅ مهم: لا تستخدم flex هنا */
       display:block;
-
       padding:18px;
       overflow-x:hidden;
       overflow-y:auto;
@@ -39,7 +42,7 @@
       display:grid;
       gap:14px;
       position:relative;
-      z-index:2; /* فوق الثلج */
+      z-index:2;
       margin: 0 auto;
       padding: 18px 0 44px;
     }
@@ -59,16 +62,8 @@
       display:block;
     }
 
-    h1{
-      margin:0;
-      font-size: 30px;
-    }
-
-    p{
-      margin:6px 0 0;
-      font-size:14px;
-      opacity:.9;
-    }
+    h1{ margin:0; font-size:30px; }
+    p{ margin:6px 0 0; font-size:14px; opacity:.9; }
 
     .grid{
       display:grid;
@@ -84,12 +79,15 @@
       text-align:center;
       cursor:pointer;
       transition:.15s;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .cardBtn:hover{
       transform: translateY(-2px);
       background: rgba(243,236,220,.12);
     }
+    .cardBtn:active{ transform: translateY(0); opacity:.92; }
 
     .ico{
       width:52px;
@@ -104,15 +102,8 @@
       font-weight:900;
     }
 
-    .label{
-      font-weight:800;
-      font-size:14px;
-    }
-
-    .hint{
-      font-size:12px;
-      opacity:.8;
-    }
+    .label{ font-weight:800; font-size:14px; }
+    .hint{ font-size:12px; opacity:.8; }
 
     .social{
       border:1px solid var(--stroke);
@@ -140,6 +131,7 @@
       color:var(--beige);
       background: rgba(243,236,220,.08);
     }
+    .sBtn:active{ opacity:.9; }
 
     .sIcon{
       width:26px;
@@ -160,7 +152,7 @@
       display:none;
       align-items:center;
       justify-content:center;
-      z-index:4;
+      z-index:6;
       padding:18px;
     }
 
@@ -193,7 +185,7 @@
       .modalBtns{ grid-template-columns:1fr; }
     }
 
-    /* ✅ blur بس للأجهزة اللي تدعمه كويس */
+    /* blur */
     .brand, .cardBtn, .social{ backdrop-filter:none; -webkit-backdrop-filter:none; }
     @supports ((-webkit-backdrop-filter: blur(8px)) or (backdrop-filter: blur(8px))){
       .brand, .cardBtn, .social, .modal{
@@ -202,7 +194,7 @@
       }
     }
 
-    /* ====== طبقة الثلج ====== */
+    /* ====== الثلج ====== */
     #snow{
       position:fixed;
       inset:0;
@@ -210,9 +202,120 @@
       pointer-events:none;
     }
 
-    /* =========================
-       ✅ آراء العملاء: سحب بيج + عبور كامل
-    ========================== */
+    /* ====== ديكور رمضاني ====== */
+    #ramadanDecor{
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+
+    .rStars{
+      position:absolute;
+      inset:0;
+      opacity:.20;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(212,175,55,.22) 0 2px, transparent 3px),
+        radial-gradient(circle at 78% 18%, rgba(212,175,55,.18) 0 2px, transparent 3px),
+        radial-gradient(circle at 52% 55%, rgba(212,175,55,.14) 0 1.5px, transparent 3px),
+        radial-gradient(circle at 25% 70%, rgba(212,175,55,.16) 0 1.6px, transparent 3px),
+        radial-gradient(circle at 85% 78%, rgba(212,175,55,.12) 0 1.3px, transparent 3px);
+    }
+
+    .rLights{
+      position:absolute;
+      top:-6px;
+      left:0; right:0;
+      height:130px;
+      opacity:.95;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.25));
+    }
+
+    .rLantern{
+      position:absolute;
+      top:14px;
+      width:86px;
+      opacity:.95;
+      filter: drop-shadow(0 16px 24px rgba(0,0,0,.28));
+      animation: sway 4.6s ease-in-out infinite;
+    }
+    .rLantern.l1{ right:14px; animation-delay:.2s; }
+    .rLantern.l2{ left:14px;  animation-delay:.6s; opacity:.88; width:76px; }
+
+    @keyframes sway{
+      0%,100%{ transform: rotate(-2deg) translateY(0); }
+      50%{ transform: rotate(2deg) translateY(2px); }
+    }
+
+    /* ====== فنانيس على الطرف ====== */
+    .fananeesSide{
+      position:fixed;
+      bottom:0;
+      right:0;
+      width:min(210px, 36vw);
+      z-index:3;
+      pointer-events:none;
+      opacity:.98;
+      filter: drop-shadow(0 18px 30px rgba(0,0,0,.35));
+    }
+    @media(max-width:420px){
+      .fananeesSide{ width:min(175px, 42vw); opacity:.92; }
+    }
+
+    /* ====== زر المنيو الرمضاني ====== */
+    .ramadanLinkBox{
+      border:1px solid rgba(212,175,55,.35);
+      background: rgba(243,236,220,.08);
+      border-radius: var(--r);
+      padding:14px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .ramadanLinkHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    .ramadanLinkHeader h3{
+      margin:0;
+      font-size:16px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .ramadanPill{
+      font-size:12px;
+      font-weight:900;
+      color: var(--beige);
+      border:1px solid rgba(212,175,55,.35);
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(212,175,55,.10);
+      white-space:nowrap;
+    }
+    .ramadanLinkBtn{
+      width:100%;
+      border:none;
+      background: linear-gradient(90deg, rgba(212,175,55,.28), rgba(243,236,220,.10));
+      color: var(--beige);
+      border-radius: 18px;
+      padding:14px 14px;
+      font-weight:900;
+      cursor:pointer;
+      border:1px solid rgba(212,175,55,.35);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+    .ramadanLinkBtn:active{ opacity:.92; }
+
+    /* ====== آراء العملاء ====== */
     .reviewsBox{
       border:1px solid var(--stroke);
       background: var(--glass);
@@ -257,14 +360,11 @@
     .review{
       position:absolute;
       top: var(--y, 0px);
-
-      /* يبدأ من اليمين خارج الصندوق */
-      transform: translateX(var(--startX, 120%)) translateY(0);
-
+      transform: translateX(120%) translateY(0);
       max-width: 82%;
       padding:10px 14px;
 
-      background: rgba(243,236,220,.96); /* ✅ بيج */
+      background: rgba(243,236,220,.96);
       color: #2B2B2B;
       border:1px solid rgba(79,111,82,.25);
       border-radius: 999px;
@@ -279,7 +379,6 @@
       will-change: transform, opacity;
     }
 
-    /* لمسة سحابة */
     .review::before,
     .review::after{
       content:"";
@@ -289,48 +388,19 @@
       border-radius:999px;
       z-index:-1;
     }
-    .review::before{
-      width:22px; height:22px;
-      left:18px; top:-10px;
-    }
-    .review::after{
-      width:14px; height:14px;
-      left:42px; top:-6px;
-    }
+    .review::before{ width:22px; height:22px; left:18px; top:-10px; }
+    .review::after{ width:14px; height:14px; left:42px; top:-6px; }
 
-    /* تشغيل العبور */
-    .review.run{
-      animation: flyAcross var(--dur, 8s) linear forwards;
-    }
+    .review.run{ animation: flyAcross var(--dur, 8s) linear forwards; }
 
-    /* عبور كامل: يدخل -> يمر -> يختفي ويطلع */
     @keyframes flyAcross{
-      0%{
-        opacity:0;
-        transform: translateX(120%) translateY(0);
-        filter: blur(.6px);
-      }
-      8%{
-        opacity:1;
-        transform: translateX(92%) translateY(var(--wobbleA, -2px));
-        filter: blur(0);
-      }
-      50%{
-        opacity:1;
-        transform: translateX(0%) translateY(var(--wobbleB, 2px));
-      }
-      92%{
-        opacity:.9;
-        transform: translateX(-92%) translateY(var(--wobbleA, -2px));
-      }
-      100%{
-        opacity:0;
-        transform: translateX(-120%) translateY(0);
-        filter: blur(.6px);
-      }
+      0%{ opacity:0; transform: translateX(120%) translateY(0); filter: blur(.6px); }
+      8%{ opacity:1; transform: translateX(92%) translateY(var(--wobbleA, -2px)); filter: blur(0); }
+      50%{ opacity:1; transform: translateX(0%) translateY(var(--wobbleB, 2px)); }
+      92%{ opacity:.9; transform: translateX(-92%) translateY(var(--wobbleA, -2px)); }
+      100%{ opacity:0; transform: translateX(-120%) translateY(0); filter: blur(.6px); }
     }
 
-    /* اختفاء فوري ناعم عند الحاجة (لو زدنا فوق 5) */
     .review.softOut{
       transition: opacity .45s ease, transform .45s ease;
       opacity:0 !important;
@@ -341,7 +411,42 @@
 
 <body>
 
-  <!-- Canvas للثلج -->
+  <!-- ديكور رمضاني -->
+  <div id="ramadanDecor" aria-hidden="true">
+    <div class="rStars"></div>
+
+    <svg class="rLights" viewBox="0 0 1200 180" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,80 C180,140 360,20 520,80 C700,150 860,30 1040,90 C1120,120 1160,110 1200,80"
+            fill="none" stroke="rgba(212,175,55,.45)" stroke-width="4"/>
+      <g fill="rgba(212,175,55,.75)">
+        <circle cx="80" cy="88" r="7"/><circle cx="170" cy="104" r="7"/>
+        <circle cx="260" cy="66" r="7"/><circle cx="350" cy="56" r="7"/>
+        <circle cx="440" cy="86" r="7"/><circle cx="530" cy="106" r="7"/>
+        <circle cx="620" cy="74" r="7"/><circle cx="710" cy="54" r="7"/>
+        <circle cx="800" cy="90" r="7"/><circle cx="890" cy="112" r="7"/>
+        <circle cx="980" cy="78" r="7"/><circle cx="1070" cy="62" r="7"/>
+        <circle cx="1160" cy="92" r="7"/>
+      </g>
+    </svg>
+
+    <svg class="rLantern l1" viewBox="0 0 120 160" aria-hidden="true">
+      <path d="M60 0 L60 24" stroke="rgba(212,175,55,.65)" stroke-width="4"/>
+      <path d="M45 24 H75" stroke="rgba(212,175,55,.65)" stroke-width="4"/>
+      <path d="M35 40 C40 30, 80 30, 85 40 L75 130 C74 140,46 140,45 130 Z"
+            fill="rgba(212,175,55,.12)" stroke="rgba(212,175,55,.45)" stroke-width="3"/>
+      <circle cx="60" cy="86" r="18" fill="rgba(212,175,55,.16)"/>
+    </svg>
+
+    <svg class="rLantern l2" viewBox="0 0 120 160" aria-hidden="true">
+      <path d="M60 0 L60 24" stroke="rgba(212,175,55,.65)" stroke-width="4"/>
+      <path d="M45 24 H75" stroke="rgba(212,175,55,.65)" stroke-width="4"/>
+      <path d="M35 40 C40 30, 80 30, 85 40 L75 130 C74 140,46 140,45 130 Z"
+            fill="rgba(212,175,55,.10)" stroke="rgba(212,175,55,.40)" stroke-width="3"/>
+      <circle cx="60" cy="86" r="16" fill="rgba(212,175,55,.14)"/>
+    </svg>
+  </div>
+
+  <!-- الثلج -->
   <canvas id="snow"></canvas>
 
   <main class="wrap">
@@ -353,7 +458,6 @@
     </section>
 
     <section class="grid">
-
       <div class="cardBtn" id="btnMenu">
         <div class="ico">☰</div>
         <div class="label">المنيو</div>
@@ -377,12 +481,11 @@
         <div class="label">موقعنا</div>
         <div class="hint">افتح الخريطة</div>
       </div>
-
     </section>
 
     <section class="social">
-      <div class="socialRow">
-        <a class="sBtn" href="https://www.instagram.com/neesha_sa" target="_blank" rel="noopener">
+      <div class="socialRow">neesha_sa
+        <a class="sBtn" href="https://www.instagram.com/neesha.sa?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw== target="_blank" rel="noopener">
           <span class="sIcon">IG</span>إنستغرام
         </a>
         <a class="sBtn" href="https://www.tiktok.com/@sneesha_sa" target="_blank" rel="noopener">
@@ -394,7 +497,19 @@
       </div>
     </section>
 
-    <!-- ✅ آراء العملاء -->
+    <!-- المنيو الرمضاني (زر يفتح الرابط) -->
+    <section class="ramadanLinkBox">
+      <div class="ramadanLinkHeader">
+        <h3>المنيو الرمضاني 🌙</h3>
+        <span class="ramadanPill">افتح الرابط</span>
+      </div>
+
+      <button class="ramadanLinkBtn" id="btnRamadanMenu">
+        ✨ افتح المنيو الرمضاني
+      </button>
+    </section>
+
+    <!-- آراء العملاء -->
     <section class="reviewsBox">
       <div class="reviewsHeader">
         <h3>آراء عملائنا 💚</h3>
@@ -404,6 +519,9 @@
     </section>
 
   </main>
+
+  <!-- صورة فنانيس (ضع الصورة باسم fananees.png بجانب الملف) -->
+  <img src="fananees.png" alt="" class="fananeesSide" aria-hidden="true">
 
   <!-- نافذة التواصل -->
   <div class="modalBack" id="modalBack">
@@ -416,27 +534,46 @@
   </div>
 
   <script>
-    // ✅ روابط
+    // روابط
     const MENU_URL  = "https://drive.google.com/file/d/1ITdD-O_QSdenN3ojEYqQs4gE3-vHmqDo/view?usp=drive_link";
     const ORDER_URL = "https://obad-omar.github.io/naisha/";
     const MAP_URL   = "https://maps.app.goo.gl/iDZfC63KTxBNhSja8?g_st=ic";
+
+    // ✅ رابط المنيو الرمضاني (تم تركيبه)
+    const RAMADAN_MENU_URL = "https://drive.google.com/file/d/1L9pl3oHkprQXt4bMd_gcMDh8mboTkMfI/view?usp=drive_link";
 
     const btnMenu    = document.getElementById("btnMenu");
     const btnContact = document.getElementById("btnContact");
     const btnOrder   = document.getElementById("btnOrder");
     const btnMap     = document.getElementById("btnMap");
+    const btnRamadanMenu = document.getElementById("btnRamadanMenu");
 
     const modalBack = document.getElementById("modalBack");
     const waBtn     = document.getElementById("waBtn");
 
-    // فتح المنيو
     btnMenu.onclick  = () => window.open(MENU_URL, "_blank", "noopener");
     btnOrder.onclick = () => window.open(ORDER_URL, "_blank", "noopener");
     btnMap.onclick   = () => window.open(MAP_URL, "_blank", "noopener");
 
+    btnRamadanMenu.onclick = () => window.open(RAMADAN_MENU_URL, "_blank", "noopener");
+
     // تواصل
-    btnContact.onclick = () => { modalBack.style.display = "flex"; };
-    modalBack.onclick = (e) => { if(e.target === modalBack) modalBack.style.display = "none"; };
+    btnContact.onclick = () => {
+      modalBack.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    };
+    modalBack.onclick = (e) => {
+      if(e.target === modalBack){
+        modalBack.style.display = "none";
+        document.body.style.overflow = "";
+      }
+    };
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && modalBack.style.display === "flex"){
+        modalBack.style.display = "none";
+        document.body.style.overflow = "";
+      }
+    });
 
     // واتساب
     waBtn.onclick = () => {
@@ -444,9 +581,7 @@
       window.open(`https://wa.me/966558608699?text=${msg}`, "_blank", "noopener");
     };
 
-    /* =========================
-       ✅ آراء العملاء: عبور كامل + أماكن مختلفة
-    ========================== */
+    /* آراء العملاء */
     const reviewsTrack = document.getElementById("reviewsTrack");
     const addReviewBtn = document.getElementById("addReviewBtn");
 
@@ -458,16 +593,14 @@
       "أكيد ما هي آخر مرة أطلب منهم"
     ];
 
-    const activeReviews = []; // عناصر موجودة (حد 5)
+    const activeReviews = [];
     let reviewIndex = 0;
 
     function clamp(n,a,b){ return Math.max(a, Math.min(b, n)); }
-
     function trackSize(){
       const r = reviewsTrack.getBoundingClientRect();
       return { w: r.width, h: r.height };
     }
-
     function rand(min,max){ return Math.random()*(max-min)+min; }
 
     function makeReviewEl(text){
@@ -479,79 +612,69 @@
     }
 
     function placeAndRun(el){
-      const { w:tw, h:th } = trackSize();
+      const { h:th } = trackSize();
 
-      // نقيس حجمه بعد إضافته بشكل مخفي لحساب max-width
       el.style.opacity = "0";
       el.style.pointerEvents = "none";
       reviewsTrack.appendChild(el);
+
       const br = el.getBoundingClientRect();
-      const ew = br.width;
       const eh = br.height;
 
-      // مكان عمودي عشوائي داخل الصندوق
       const y = clamp(rand(6, th - eh - 6), 6, Math.max(6, th - eh - 6));
       el.style.setProperty("--y", y + "px");
 
-      // مدة وحركة تمايل بسيطة أثناء العبور
       const dur = rand(7.2, 10.0).toFixed(2) + "s";
       el.style.setProperty("--dur", dur);
       el.style.setProperty("--wobbleA", (rand(-4, -1)).toFixed(1) + "px");
       el.style.setProperty("--wobbleB", (rand(1, 4)).toFixed(1) + "px");
 
-      // بدء الحركة
-      requestAnimationFrame(() => {
-        el.classList.add("run");
-      });
+      requestAnimationFrame(() => { el.classList.add("run"); });
 
-      // لما يخلص: احذف العنصر
       el.addEventListener("animationend", () => {
         const idx = activeReviews.indexOf(el);
         if(idx !== -1) activeReviews.splice(idx, 1);
         el.remove();
       }, { once:true });
 
-      // ✅ حد أقصى 5: لو زاد، طلّع الأقدم بنعومة
       activeReviews.push(el);
       if(activeReviews.length > 5){
         const old = activeReviews.shift();
         if(old && old.isConnected){
           old.classList.add("softOut");
-          setTimeout(() => {
-            if(old.isConnected) old.remove();
-          }, 480);
+          setTimeout(() => { if(old.isConnected) old.remove(); }, 480);
         }
       }
     }
 
-    function spawnReview(text){
-      const el = makeReviewEl(text);
-      placeAndRun(el);
-    }
+    function spawnReview(text){ placeAndRun(makeReviewEl(text)); }
 
     function loopReviews(){
       spawnReview(reviews[reviewIndex]);
       reviewIndex = (reviewIndex + 1) % reviews.length;
     }
 
-    // بداية التشغيل
     loopReviews();
-    setInterval(loopReviews, 2600);
+    let reviewTimer = setInterval(loopReviews, 2600);
 
-    // إضافة رأي جديد
     addReviewBtn.onclick = () => {
       const text = prompt("اكتب رأيك عن نيشا:");
       if(!text) return;
       const clean = text.trim();
       if(clean.length < 4) return;
-
       reviews.push(clean);
       spawnReview(clean);
     };
 
-    /* =========================
-       ✅ ثلج أخف + متوافق أندرويد
-    ========================== */
+    document.addEventListener("visibilitychange", () => {
+      if(document.hidden){
+        if(reviewTimer){ clearInterval(reviewTimer); reviewTimer = null; }
+      }else{
+        if(!reviewTimer) reviewTimer = setInterval(loopReviews, 2600);
+      }
+    });
+
+    /* ✅ الثلج الذهبي */
     const canvas = document.getElementById("snow");
     const ctx = canvas.getContext("2d", { alpha: true });
 
@@ -592,7 +715,7 @@
 
     function draw(){
       ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
-      ctx.fillStyle = "rgba(243,236,220,.85)";
+      ctx.fillStyle = "rgba(212,175,55,.85)";
 
       for(const f of snow){
         ctx.beginPath();
@@ -627,3 +750,4 @@
 
 </body>
 </html>
+```
