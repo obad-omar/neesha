@@ -776,8 +776,27 @@
       const count = Object.values(cart).reduce((sum, item) => sum + item.qty, 0);
       message += `\n━━━━━━━━━━━━━━━━\n*💰 الإجمالي: ${total} ر.س*\n*📦 عدد الأصناف: ${count}*\n`;
 
+      // Save order data to localStorage
+      localStorage.setItem('orderType', type);
+      localStorage.setItem('orderData', JSON.stringify({
+        name: name,
+        phone: phone,
+        address: address,
+        notes: notes,
+        items: Object.entries(cart).map(([name, item]) => ({
+          name: name,
+          qty: item.qty,
+          price: item.price
+        }))
+      }));
+
       const waUrl = `https://wa.me/${WA_NUM}?text=${encodeURIComponent(message)}`;
       window.open(waUrl, '_blank');
+      
+      // Redirect to tracking page
+      setTimeout(() => {
+        window.location.href = './tracking.html?type=' + type;
+      }, 500);
       
       cart = {};
       updateCart();

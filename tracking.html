@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>تتبع الطلب - نيشا</title>
+  <meta name="description" content="تتبع طلبك من نيشا في الوقت الفعلي">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;700;900&display=swap');
+
+    :root {
+      --primary: #4F6F52;
+      --accent: #F2E8D8;
+      --dark: #1A1C1E;
+      --white: #ffffff;
+      --bg-body: #F9F7F2;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --radius: 20px;
+      --success: #4CAF50;
+      --warning: #FF9800;
+    }
+
+    * { 
+      box-sizing: border-box; 
+      -webkit-tap-highlight-color: transparent; 
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Alexandria', sans-serif;
+      background: linear-gradient(135deg, #F9F7F2 0%, #E8E4D8 100%);
+      color: var(--dark);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(79, 111, 82, 0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .logo-area { 
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+    }
+
+    .logo-mark {
+      width: 35px; 
+      height: 35px;
+      background: var(--primary);
+      border-radius: 10px;
+      display: grid; 
+      place-items: center;
+      color: var(--white);
+      font-weight: 900; 
+      font-size: 18px;
+    }
+
+    .brand-name { 
+      font-weight: 900; 
+      font-size: 1.1rem; 
+      color: var(--primary); 
+    }
+
+    /* Container */
+    .container {
+      flex: 1;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Tracking Card */
+    .tracking-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 30px 20px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      animation: slideUp 0.5s ease;
+    }
+
+    .tracking-title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin: 0 0 10px;
+    }
+
+    .tracking-subtitle {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+    }
+
+    /* Order Number */
+    .order-number {
+      background: linear-gradient(135deg, var(--primary), #3a5139);
+      color: white;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    .order-number-label {
+      font-size: 0.8rem;
+      opacity: 0.9;
+      margin-bottom: 5px;
+    }
+
+    .order-number-value {
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      margin: 40px 0;
+      padding: 20px 0;
+    }
+
+    .timeline-item {
+      display: flex;
+      margin-bottom: 30px;
+      position: relative;
+      opacity: 0.5;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-item.active {
+      opacity: 1;
+    }
+
+    .timeline-item.completed {
+      opacity: 1;
+    }
+
+    /* Timeline Circle */
+    .timeline-circle {
+      width: 60px;
+      height: 60px;
+      background: #f0f0f0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+      margin-left: 15px;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+      border: 3px solid transparent;
+    }
+
+    .timeline-item.completed .timeline-circle {
+      background: var(--success);
+      border-color: var(--success);
+      animation: scaleIn 0.5s ease;
+    }
+
+    .timeline-item.active .timeline-circle {
+      background: var(--warning);
+      border-color: var(--warning);
+      animation: pulse 1.5s ease infinite;
+    }
+
+    /* Timeline Line */
+    .timeline-line {
+      position: absolute;
+      width: 3px;
+      background: #e0e0e0;
+      right: 0;
+      top: 70px;
+      bottom: -30px;
+      margin-right: 28px;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-item.completed .timeline-line {
+      background: var(--success);
+    }
+
+    .timeline-item:last-child .timeline-line {
+      display: none;
+    }
+
+    /* Timeline Content */
+    .timeline-content {
+      flex: 1;
+      text-align: right;
+      margin-right: 15px;
+    }
+
+    .timeline-status {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+
+    .timeline-time {
+      font-size: 0.85rem;
+      color: #999;
+    }
+
+    /* Delivery Animation */
+    .delivery-car {
+      display: none;
+      text-align: center;
+      margin: 30px 0;
+      font-size: 50px;
+      animation: moveCar 2s ease-in-out infinite;
+    }
+
+    .delivery-car.active {
+      display: block;
+    }
+
+    @keyframes moveCar {
+      0% { transform: translateX(-100%); }
+      50% { transform: translateX(50%); }
+      100% { transform: translateX(150%); }
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      margin: 30px 0;
+      background: #f0f0f0;
+      border-radius: 10px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--success));
+      border-radius: 10px;
+      transition: width 0.5s ease;
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Timer */
+    .timer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin: 25px 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .timer-icon {
+      font-size: 1.5rem;
+      animation: rotate 2s linear infinite;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Buttons */
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 30px;
+      flex-direction: column;
+    }
+
+    .btn {
+      padding: 15px 25px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #3a5139;
+      transform: translateY(-2px);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background: #f9f9f9;
+    }
+
+    .btn-secondary:active {
+      transform: scale(0.98);
+    }
+
+    /* Info Box */
+    .info-box {
+      background: #f0f8ff;
+      border-right: 4px solid var(--primary);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      text-align: right;
+      font-size: 0.9rem;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .info-box strong {
+      color: var(--primary);
+    }
+
+    /* Animations */
+    @keyframes slideUp {
+      from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0); }
+      to { transform: scale(1); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px;
+      }
+
+      .tracking-card {
+        padding: 20px 15px;
+      }
+
+      .tracking-title {
+        font-size: 1.3rem;
+      }
+
+      .timeline-circle {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo-area">
+      <div class="logo-mark">N</div>
+      <div class="brand-name">نيشا NEESHA</div>
+    </div>
+  </header>
+
+  <!-- Container -->
+  <div class="container">
+    <!-- Tracking Card -->
+    <div class="tracking-card">
+      <h1 class="tracking-title">🎉 تم استقبال طلبك</h1>
+      <p class="tracking-subtitle">سيتم تحضيره بعناية فائقة</p>
+
+      <!-- Order Number -->
+      <div class="order-number">
+        <div class="order-number-label">رقم الطلب</div>
+        <div class="order-number-value" id="orderNumber">#2026001</div>
+      </div>
+
+      <!-- Timer -->
+      <div class="timer">
+        <span class="timer-icon">⏱️</span>
+        <span id="timerText">20 دقيقة</span>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <!-- Delivery Car Animation -->
+      <div class="delivery-car" id="deliveryCar">🚗</div>
+
+      <!-- Timeline -->
+      <div class="timeline" id="timeline"></div>
+
+      <!-- Info Box -->
+      <div class="info-box" id="infoBox"></div>
+
+      <!-- Buttons -->
+      <div class="button-group">
+        <button class="btn btn-primary" onclick="shareOrder()">📱 مشاركة الطلب</button>
+        <button class="btn btn-secondary" onclick="newOrder()">🛒 طلب آخر</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Get order type from URL or localStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderType = urlParams.get('type') || localStorage.getItem('orderType') || 'pickup';
+    const orderData = JSON.parse(localStorage.getItem('orderData') || '{}');
+
+    let timeRemaining = 20 * 60; // 20 minutes in seconds
+    let currentStep = 0;
+
+    // Define timeline steps
+    const pickupSteps = [
+      { status: '📝 تم استقبال الطلب', time: 'الآن' },
+      { status: '👨‍🍳 جاري التحضير', time: 'بعد دقيقة' },
+      { status: '✅ الطلب جاهز', time: 'بعد 20 دقيقة' }
+    ];
+
+    const deliverySteps = [
+      { status: '📝 تم استقبال الطلب', time: 'الآن' },
+      { status: '👨‍🍳 جاري التحضير', time: 'بعد 5 دقائق' },
+      { status: '✅ الطلب جاهز', time: 'بعد 15 دقيقة' },
+      { status: '🚗 في الطريق إليك', time: 'بعد 20 دقيقة' }
+    ];
+
+    const steps = orderType === 'delivery' ? deliverySteps : pickupSteps;
+
+    // Generate order number
+    function generateOrderNumber() {
+      return '#' + Math.floor(Math.random() * 9000) + 1000;
+    }
+
+    // Render timeline
+    function renderTimeline() {
+      const timeline = document.getElementById('timeline');
+      timeline.innerHTML = steps.map((step, idx) => `
+        <div class="timeline-item ${idx <= currentStep ? (idx < currentStep ? 'completed' : 'active') : ''}">
+          <div class="timeline-circle"></div>
+          <div class="timeline-content">
+            <div class="timeline-status">${step.status}</div>
+            <div class="timeline-time">${step.time}</div>
+          </div>
+          <div class="timeline-line"></div>
+        </div>
+      `).join('');
+    }
+
+    // Update progress
+    function updateProgress() {
+      const totalSteps = steps.length;
+      const progress = ((currentStep + 1) / totalSteps) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+
+      // Show delivery car only on last step for delivery
+      if (orderType === 'delivery' && currentStep === steps.length - 1) {
+        document.getElementById('deliveryCar').classList.add('active');
+      }
+
+      renderTimeline();
+    }
+
+    // Update timer
+    function updateTimer() {
+      const minutes = Math.floor(timeRemaining / 60);
+      const seconds = timeRemaining % 60;
+      document.getElementById('timerText').textContent = 
+        `${minutes} دقيقة و ${seconds} ثانية`;
+
+      if (timeRemaining > 0) {
+        timeRemaining--;
+      }
+    }
+
+    // Auto advance steps
+    function autoAdvanceSteps() {
+      const stepInterval = (20 * 60) / (steps.length - 1);
+      const elapsedTime = (20 * 60) - timeRemaining;
+      const newStep = Math.floor(elapsedTime / stepInterval);
+
+      if (newStep > currentStep && newStep < steps.length) {
+        currentStep = newStep;
+        updateProgress();
+      }
+    }
+
+    // Update info box
+    function updateInfoBox() {
+      const infoBox = document.getElementById('infoBox');
+      if (orderType === 'delivery') {
+        infoBox.innerHTML = `
+          <strong>📍 التوصيل:</strong><br>
+          سيتم توصيل طلبك إلى ${orderData.address || 'الموقع المحدد'}<br>
+          <strong>📞 رقم الجوال:</strong> ${orderData.phone || '05xxxxxxxx'}
+        `;
+      } else {
+        infoBox.innerHTML = `
+          <strong>🏪 الاستلام من الفرع:</strong><br>
+          سيكون طلبك جاهزاً للاستلام بعد 20 دقيقة<br>
+          <strong>📞 رقم الجوال:</strong> ${orderData.phone || '05xxxxxxxx'}
+        `;
+      }
+    }
+
+    // Share order
+    function shareOrder() {
+      const orderNum = document.getElementById('orderNumber').textContent;
+      const message = `طلبي من نيشا ${orderNum} - تم استقباله وجاري التحضير 🍕`;
+      const waUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+      window.open(waUrl, '_blank');
+    }
+
+    // New order
+    function newOrder() {
+      localStorage.removeItem('orderType');
+      localStorage.removeItem('orderData');
+      window.location.href = './store.html';
+    }
+
+    // Initialize
+    document.getElementById('orderNumber').textContent = generateOrderNumber();
+    updateProgress();
+    updateInfoBox();
+
+    // Update timer every second
+    setInterval(() => {
+      updateTimer();
+      autoAdvanceSteps();
+    }, 1000);
+  </script>
+
+</body>
+</html>
