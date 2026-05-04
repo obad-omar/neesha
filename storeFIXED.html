@@ -792,12 +792,10 @@
 
       // Open WhatsApp in new tab
       const waUrl = `https://wa.me/${WA_NUM}?text=${encodeURIComponent(message)}`;
-      window.open(waUrl, '_blank');
-      
-      // Redirect to tracking page after a short delay
-      setTimeout(() => {
-        window.location.href = './tracking.html?type=' + type;
-      }, 1000);
+     window.location.href = waUrl;
+setTimeout(() => {
+  window.location.href = './tracking.html?type=' + type;
+}, 2000);
       
       cart = {};
       updateCart();
