@@ -1,38 +1,666 @@
 <!doctype html>
+
 <html lang="ar" dir="rtl">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
-  <meta name="description" content="استمتع بتجربة فريدة في مطعم نيشا بالرياض. نقدم تشكيلة فاخرة من المعجنات والباستري والمشاوي بتنسيق عصري وطعم لا يُنسى. اطلب الآن عبر موقعنا الرسمي." />
-  <meta name="keywords" content="نيشا, مطعم نيشا, Neesha, نيشا باستري, مطاعم الرياض, معجنات الرياض, طلب اونلاين نيشا, نيشا الرياض" />
-  <meta name="theme-color" content="#2D4030" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="نيشا" />
-  
-  <meta property="og:title" content="نيشا | Neesha - وجهتك الأولى للمعجنات" />
-  <meta property="og:description" content="اكتشف قائمة الطعام الجديدة واطلب مباشرة من مطعم نيشا." />
-  <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/3014/3014534.png" />
-  <meta property="og:url" content="https://neesha.manus.space" />
-  <meta property="og:type" content="website" />
-  
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="نيشا | Neesha - معجنات مختارة بعناية" />
-  <meta name="twitter:description" content="أرقى المعجنات والباستري في الرياض" />
-  <meta name="twitter:image" content="https://cdn-icons-png.flaticon.com/512/3014/3014534.png" />
 
-  <title>نيشا | Neesha - أرقى المعجنات البيتزاء في الرياض</title>
-  
-  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3014/3014534.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>نيشا | Neesha Selected Pastries</title>
+
+
+
+  <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;700;900&display=swap');
+
+
+
+    :root {
+
+      --primary: #2D4030; /* أخضر غامق ملكي */
+
+      --accent: #D4AF37;  /* ذهبي مطفي */
+
+      --bg: #F9F7F2;      /* خلفية كريمية باردة */
+
+      --card-bg: #ffffff;
+
+      --text: #1a1a1a;
+
+      --radius: 24px;
+
+      --shadow: 0 10px 30px rgba(0,0,0,0.05);
+
+    }
+
+
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    
+
+    body {
+
+      margin: 0;
+
+      font-family: 'Alexandria', sans-serif;
+
+      background-color: var(--bg);
+
+      color: var(--text);
+
+      line-height: 1.6;
+
+      overflow-x: hidden;
+
+    }
+
+
+
+    /* شريط العروض (السحاب العلوي) */
+
+    .promo-bar {
+
+      background: var(--primary);
+
+      color: var(--accent);
+
+      padding: 10px 0;
+
+      overflow: hidden;
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 100;
+
+      border-bottom: 1px solid rgba(212,175,55,0.3);
+
+    }
+
+
+
+    .promo-track {
+
+      display: flex;
+
+      white-space: nowrap;
+
+      animation: marquee 20s linear infinite;
+
+    }
+
+
+
+    .promo-item {
+
+      padding: 0 40px;
+
+      font-weight: 700;
+
+      font-size: 14px;
+
+      letter-spacing: 1px;
+
+    }
+
+
+
+    @keyframes marquee {
+
+      0% { transform: translateX(100%); }
+
+      100% { transform: translateX(-100%); }
+
+    }
+
+
+
+    .container {
+
+      max-width: 600px;
+
+      margin: 0 auto;
+
+      padding: 20px;
+
+    }
+
+
+
+    /* الهوية البصرية */
+
+    .header {
+
+      text-align: center;
+
+      padding: 40px 0;
+
+    }
+
+
+
+    .logo-container {
+
+      width: 120px;
+
+      height: 120px;
+
+      background: var(--card-bg);
+
+      margin: 0 auto 20px;
+
+      border-radius: 50%;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      box-shadow: var(--shadow);
+
+      border: 1px solid #eee;
+
+    }
+
+
+
+    .logo-container img { width: 80%; height: auto; }
+
+
+
+    h1 { margin: 0; font-weight: 900; font-size: 32px; color: var(--primary); }
+
+    .subtitle { opacity: 0.6; font-weight: 300; margin-top: 5px; }
+
+
+
+    /* Bento Grid Layout */
+
+    .bento-grid {
+
+      display: grid;
+
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 15px;
+
+      margin-top: 30px;
+
+    }
+
+
+
+    .bento-item {
+
+      background: var(--card-bg);
+
+      border-radius: var(--radius);
+
+      padding: 25px;
+
+      text-decoration: none;
+
+      color: var(--text);
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: center;
+
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+      border: 1px solid rgba(0,0,0,0.03);
+
+      box-shadow: var(--shadow);
+
+      position: relative;
+
+      overflow: hidden;
+
+    }
+
+
+
+    .bento-item:hover {
+
+      transform: translateY(-5px);
+
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+
+    }
+
+
+
+    .bento-item.large { grid-column: span 2; padding: 40px; background: var(--primary); color: #fff; }
+
+
+
+    .icon-box {
+
+      font-size: 28px;
+
+      margin-bottom: 12px;
+
+      transition: 0.3s;
+
+    }
+
+
+
+    .bento-item:hover .icon-box { transform: scale(1.2); }
+
+
+
+    .title { font-weight: 700; font-size: 16px; }
+
+    .desc { font-size: 12px; opacity: 0.6; margin-top: 4px; }
+
+
+
+    /* مراجعات العملاء بشكل عصري */
+
+    .reviews-section {
+
+      margin-top: 40px;
+
+      background: #fff;
+
+      border-radius: var(--radius);
+
+      padding: 20px;
+
+      box-shadow: var(--shadow);
+
+    }
+
+
+
+    .review-bubble {
+
+      background: #f8f8f8;
+
+      padding: 15px;
+
+      border-radius: 15px;
+
+      margin-bottom: 10px;
+
+      font-size: 13px;
+
+      border-right: 4px solid var(--primary);
+
+    }
+
+
+
+    /* أزرار التواصل الاجتماعي */
+
+    .social-links {
+
+      display: flex;
+
+      justify-content: center;
+
+      gap: 15px;
+
+      margin-top: 30px;
+
+    }
+
+
+
+    .social-circle {
+
+      width: 45px;
+
+      height: 45px;
+
+      background: #fff;
+
+      border-radius: 50%;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      box-shadow: var(--shadow);
+
+      text-decoration: none;
+
+      font-size: 18px;
+
+      transition: 0.3s;
+
+    }
+
+
+
+    .social-circle:hover { background: var(--primary); color: #fff; }
+
+
+
+    /* Modal */
+
+    .modal-overlay {
+
+      position: fixed;
+
+      inset: 0;
+
+      background: rgba(0,0,0,0.6);
+
+      display: none;
+
+      align-items: center;
+
+      justify-content: center;
+
+      z-index: 1000;
+
+      backdrop-filter: blur(5px);
+
+    }
+
+
+
+    .modal-content {
+
+      background: white;
+
+      padding: 30px;
+
+      border-radius: var(--radius);
+
+      width: 90%;
+
+      max-width: 400px;
+
+      text-align: center;
+
+    }
+
+
+
+    .modal-btn {
+
+      display: block;
+
+      width: 100%;
+
+      padding: 15px;
+
+      margin: 10px 0;
+
+      border-radius: 15px;
+
+      border: none;
+
+      font-family: inherit;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      text-decoration: none;
+
+    }
+
+
+
+    .btn-call { background: var(--primary); color: white; }
+
+    .btn-wa { background: #25D366; color: white; }
+
+
+
+    /* Animations */
+
+    [data-aos] {
+
+      animation: fadeInUp 0.8s ease forwards;
+
+      opacity: 0;
+
+    }
+
+
+
+    @keyframes fadeInUp {
+
+      from { opacity: 0; transform: translateY(20px); }
+
+      to { opacity: 1; transform: translateY(0); }
+
+    }
+
+  </style>
+
 </head>
 
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-  <script defer src="%VITE_ANALYTICS_ENDPOINT%/umami" data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
+
+
+
+  <div class="promo-bar">
+
+    <div class="promo-track">
+
+      <span class="promo-item">✨ عرض الاثنين: اطلب فطيرة واحصل على الثانية مجاناً ✨</span>
+
+      <span class="promo-item">🥐 معجنات طازجة يومياً من الفرن إليك 🥐</span>
+
+      <span class="promo-item">✨ عروض حصرية لمتابعينا على السناب ✨</span>
+
+      <span class="promo-item">✨ عرض الاثنين: اطلب صاروخ واحصل على الثانية مجاناً ✨</span>
+
+      <span class="
+
+      promo-item">كادر قوي جدا
+
+    </span>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="container">
+
+    <header class="header" data-aos>
+
+      <div class="logo-container">
+
+        <img src="logo.png" alt="Neesha Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3014/3014534.png'">
+
+      </div>
+
+      <h1>نيشا</h1>
+
+      <div class="subtitle">Selected Pastries | معجنات مختارة بعناية</div>
+
+    </header>
+
+
+
+    <div class="bento-grid">
+
+     
+ <a href="store.html" class="bento-item large">
+  <div class="icon-box">🛒</div>
+  <div class="title">اطلب الآن</div>
+</a>
+
+
+      <a href="https://drive.google.com/file/d/1L36Z-hx735bBN0PDGL42rwaYL5H4dxpi/view" target="_blank" class="bento-item" data-aos style="animation-delay: 0.2s">
+
+        <div class="icon-box">📜</div>
+
+        <div class="title">المنيو</div>
+
+        <div class="desc">قائمة الطعام</div>
+
+      </a>
+
+
+
+      <a href="https://maps.google.com" class="bento-item" data-aos style="animation-delay: 0.3s">
+
+        <div class="icon-box">📍</div>
+
+        <div class="title">موقعنا</div>
+
+        <div class="desc">زرنا في الفرع</div>
+
+      </a>
+
+
+
+      <div class="bento-item" id="contactBtn" style="cursor:pointer; animation-delay: 0.4s" data-aos>
+
+        <div class="icon-box">📞</div>
+
+        <div class="title">تواصل معنا</div>
+
+        <div class="desc">دائماً في خدمتك</div>
+
+      </div>
+
+
+
+      <div class="bento-item" style="animation-delay: 0.5s" data-aos>
+
+        <div class="icon-box">⭐</div>
+
+        <div class="title">4.9/5</div>
+
+        <div class="desc">تقييم عملائنا</div>
+
+      </div>
+
+    </div>
+
+
+
+    <section class="reviews-section" data-aos style="animation-delay: 0.6s">
+
+      <h3 style="margin-top:0; font-size: 16px;">ماذا يقولون عن نيشا؟</h3>
+
+      <div id="reviewsContainer">
+
+        <div class="review-bubble">"المعجنات خفيفة جداً والشاورما طعمه خيالي!"</div>
+
+        <div class="review-bubble">"أفضل مكان للمعجنات في المنطقة بدون منازع."</div>
+
+      </div>
+
+    </section>
+
+
+
+    <div class="social-links" data-aos style="animation-delay: 0.7s">
+
+      <a href="https://tiktok.com/@neesha_sa" class="social-circle">📱</a>
+
+      <a href="https://instagram.com/neesha.sa" class="social-circle">📸</a>
+
+      <a href="https://snapchat.com/add/neesha_2026" class="social-circle">👻</a>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="modal-overlay" id="modal">
+
+    <div class="modal-content">
+
+      <h2 style="color:var(--primary)">تواصل مباشرة</h2>
+
+      <p>اختر الوسيلة المناسبة لك</p>
+
+      <a href="tel:+966558608699" class="modal-btn btn-call">اتصال هاتفي</a>
+
+      <a href="https://wa.me/966558608699" class="modal-btn btn-wa">محادثة واتساب</a>
+
+      <button onclick="closeModal()" style="margin-top:15px; background:none; border:none; color:999; cursor:pointer">إغلاق</button>
+
+    </div>
+
+  </div>
+
+
+
+  <script>
+
+    // التحكم في المودال
+
+    const modal = document.getElementById('modal');
+
+    const contactBtn = document.getElementById('contactBtn');
+
+
+
+    contactBtn.onclick = () => modal.style.display = 'flex';
+
+    
+
+    function closeModal() {
+
+      modal.style.display = 'none';
+
+    }
+
+
+
+    window.onclick = (event) => {
+
+      if (event.target == modal) closeModal();
+
+    }
+
+
+
+    // إضافة تأثير بسيط عند التمرير
+
+    const observerOptions = { threshold: 0.1 };
+
+    const observer = new IntersectionObserver((entries) => {
+
+      entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+          entry.target.style.opacity = "1";
+
+          entry.target.style.transform = "translateY(0)";
+
+        }
+
+      });
+
+    }, observerOptions);
+
+
+
+    document.querySelectorAll('[data-aos]').forEach(el => observer.observe(el));
+
+  </script>
+
+
+
 </body>
 
 </html>
