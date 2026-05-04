@@ -1,28 +1,22 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <title>نيشا | Neesha - أرقى المعجنات البيتزاء في الرياض</title>
-  <meta name="description" content="استمتع بتجربة فريدة في مطعم نيشا بالرياض. نقدم تشكيلة فاخرة من المعجنات والشاورما والمشاوي بتنسيق عصري وطعم لا يُنسى. اطلب الآن عبر موقعنا الرسمي.">
-  <meta name="keywords" content="نيشا, مطعم نيشا, Neesha, نيشا باستري, مطاعم الرياض, معجنات الرياض, طلب اونلاين نيشا, نيشا الرياض">
-  
-  <meta property="og:title" content="نيشا | Neesha - وجهتك الأولى للمعجنات">
-  <meta property="og:description" content="اكتشف قائمة الطعام الجديدة واطلب مباشرة من مطعم نيشا.">
-  <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/3014/3014534.png">
-  <meta property="og:url" content="https://neesha.example.com">
+  <title>متجر نيشا - اطلب الآن</title>
+  <meta name="description" content="اطلب من متجر نيشا الآن - تشكيلة كاملة من المعجنات والبيتزا والشاورما مع خدمة توصيل سريعة.">
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;700;900&display=swap');
 
     :root {
-      --primary: #2D4030;
-      --accent: #D4AF37;
-      --bg: #F9F7F2;
-      --card-bg: #ffffff;
-      --text: #1a1a1a;
-      --radius: 24px;
-      --shadow: 0 10px 30px rgba(0,0,0,0.05);
+      --primary: #4F6F52;
+      --accent: #F2E8D8;
+      --dark: #1A1C1E;
+      --white: #ffffff;
+      --bg-body: #F9F7F2;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --radius: 20px;
     }
 
     * { 
@@ -30,294 +24,418 @@
       -webkit-tap-highlight-color: transparent; 
     }
 
-    body {
+    html, body {
+      width: 100%;
+      height: 100%;
       margin: 0;
+      padding: 0;
+    }
+
+    body {
       font-family: 'Alexandria', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+      background-color: var(--bg-body);
+      color: var(--dark);
       overflow-x: hidden;
     }
 
-    /* شريط العروض */
-    .promo-bar {
-      background: var(--primary);
-      color: var(--accent);
-      padding: 12px 0;
-      overflow: hidden;
+    /* Header */
+    header {
       position: sticky;
       top: 0;
-      z-index: 100;
-      border-bottom: 1px solid rgba(212,175,55,0.3);
-    }
-
-    .promo-track {
-      display: flex;
-      white-space: nowrap;
-      animation: marquee 25s linear infinite;
-    }
-
-    .promo-item {
-      padding: 0 40px;
-      font-weight: 700;
-      font-size: 14px;
-      letter-spacing: 1px;
-    }
-
-    @keyframes marquee {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
-    }
-
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    /* الهوية البصرية */
-    .header {
-      text-align: center;
-      padding: 40px 0;
-      animation: fadeInUp 0.8s ease forwards;
-    }
-
-    .logo-container {
-      width: 120px;
-      height: 120px;
-      background: var(--card-bg);
-      margin: 0 auto 20px;
-      border-radius: 50%;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      padding: 12px 20px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow);
-      border: 1px solid #eee;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(79, 111, 82, 0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
-    .logo-container img { 
-      width: 80%; 
-      height: auto; 
+    .logo-area { 
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
     }
 
-    h1 { 
-      margin: 0; 
+    .logo-mark {
+      width: 35px; 
+      height: 35px;
+      background: var(--primary);
+      border-radius: 10px;
+      display: grid; 
+      place-items: center;
+      color: var(--white);
       font-weight: 900; 
-      font-size: 32px; 
+      font-size: 18px;
+    }
+
+    .brand-name { 
+      font-weight: 900; 
+      font-size: 1.1rem; 
       color: var(--primary); 
     }
 
-    .subtitle { 
-      opacity: 0.6; 
-      font-weight: 300; 
-      margin-top: 5px; 
-      font-size: 14px;
+    .header-subtitle {
+      font-size: 0.7rem; 
+      font-weight: 700; 
+      color: #777;
     }
 
-    /* Bento Grid Layout */
-    .bento-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+    /* Categories Navigation */
+    .cats-nav {
+      display: flex; 
+      gap: 10px; 
+      padding: 15px 20px;
+      overflow-x: auto; 
+      position: sticky; 
+      top: 56px;
+      background: var(--bg-body); 
+      z-index: 900;
+      scrollbar-width: none;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .cats-nav::-webkit-scrollbar { 
+      display: none; 
+    }
+
+    .cat-item {
+      padding: 8px 18px; 
+      background: white; 
+      border-radius: 50px;
+      white-space: nowrap; 
+      font-weight: 700; 
+      font-size: 0.85rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .cat-item:hover {
+      background: #f0f0f0;
+    }
+
+    .cat-item.active { 
+      background: var(--primary); 
+      color: white; 
+    }
+
+    /* Menu Grid */
+    .menu-wrap { 
+      padding: 10px 20px 150px; 
+    }
+
+    .section-title { 
+      font-weight: 900; 
+      font-size: 1.2rem; 
+      color: var(--primary);
+      margin: 25px 0 15px; 
+      display: flex; 
+      align-items: center; 
+      gap: 8px;
+    }
+
+    .grid {
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
       gap: 15px;
-      margin-top: 30px;
     }
 
-    .bento-item {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      padding: 25px;
-      text-decoration: none;
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      border: 1px solid rgba(0,0,0,0.03);
-      box-shadow: var(--shadow);
-      position: relative;
+    .card {
+      background: white; 
+      border-radius: var(--radius); 
       overflow: hidden;
+      box-shadow: var(--shadow); 
+      position: relative; 
+      transition: all 0.3s;
       cursor: pointer;
     }
 
-    .bento-item:hover {
-      transform: translateY(-8px);
+    .card:hover {
+      transform: translateY(-5px);
       box-shadow: 0 15px 35px rgba(0,0,0,0.1);
     }
 
-    .bento-item:active {
-      transform: scale(0.98);
+    .card img { 
+      width: 100%; 
+      height: 130px; 
+      object-fit: cover; 
+      background: #f0f0f0; 
     }
 
-    .bento-item.large { 
-      grid-column: span 2; 
-      padding: 40px; 
-      background: var(--primary); 
-      color: #fff; 
+    .card-body { 
+      padding: 12px; 
     }
 
-    .icon-box {
-      font-size: 32px;
-      margin-bottom: 12px;
-      transition: 0.3s;
-    }
-
-    .bento-item:hover .icon-box { 
-      transform: scale(1.2) rotate(5deg); 
-    }
-
-    .title { 
+    .card-name { 
       font-weight: 700; 
-      font-size: 16px; 
-    }
-
-    .desc { 
-      font-size: 12px; 
-      opacity: 0.6; 
-      margin-top: 4px; 
-    }
-
-    /* مراجعات العملاء */
-    .reviews-section {
-      margin-top: 40px;
-      background: #fff;
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow);
-      animation: fadeInUp 0.8s ease forwards 0.2s both;
-    }
-
-    .reviews-section h3 {
-      margin-top: 0;
+      font-size: 0.9rem; 
+      margin-bottom: 5px; 
       color: var(--primary);
+    }
+
+    .card-price { 
+      font-weight: 900; 
+      color: var(--primary); 
+      font-size: 1rem; 
+    }
+
+    .add-btn {
+      position: absolute; 
+      bottom: 10px; 
+      left: 10px;
+      width: 32px; 
+      height: 32px; 
+      background: var(--primary);
+      color: white; 
+      border-radius: 8px; 
+      display: grid; 
+      place-items: center;
+      font-weight: bold; 
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s;
+    }
+
+    .add-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .add-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Cart Float */
+    .cart-float {
+      position: fixed; 
+      bottom: 20px; 
+      left: 20px; 
+      right: 20px;
+      background: var(--primary); 
+      color: white; 
+      padding: 15px 25px;
+      border-radius: 18px; 
+      display: none; 
+      justify-content: space-between;
+      align-items: center; 
+      box-shadow: 0 10px 25px rgba(79, 111, 82, 0.4); 
+      z-index: 2000;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .cart-float:hover {
+      transform: translateY(-5px);
+    }
+
+    .cart-float.active {
+      display: flex;
+      animation: slideUp 0.3s ease;
+    }
+
+    .cart-left {
+      display: flex; 
+      align-items: center; 
+      gap: 12px;
+    }
+
+    .cart-count {
+      background: white; 
+      color: var(--primary); 
+      padding: 2px 10px; 
+      border-radius: 8px; 
       font-weight: 900;
     }
 
-    .review-bubble {
-      background: #f8f8f8;
-      padding: 15px;
-      border-radius: 15px;
-      margin-bottom: 10px;
-      font-size: 13px;
-      border-right: 4px solid var(--primary);
-      line-height: 1.5;
-    }
-
-    /* أزرار التواصل الاجتماعي */
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 30px;
-      animation: fadeInUp 0.8s ease forwards 0.4s both;
-    }
-
-    .social-circle {
-      width: 50px;
-      height: 50px;
-      background: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow);
-      text-decoration: none;
-      font-size: 20px;
-      transition: all 0.3s;
-      border: 2px solid transparent;
-    }
-
-    .social-circle:hover { 
-      background: var(--primary); 
-      color: #fff;
-      transform: translateY(-3px);
-    }
-
     /* Modal */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
+    .modal {
+      position: fixed; 
+      inset: 0; 
       background: rgba(0,0,0,0.6);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      backdrop-filter: blur(5px);
+      display: none; 
+      z-index: 3000; 
+      align-items: center; 
+      justify-content: center; 
       padding: 20px;
+      backdrop-filter: blur(5px);
     }
 
-    .modal-overlay.active {
+    .modal.active {
       display: flex;
       animation: fadeIn 0.3s ease;
     }
 
     .modal-content {
-      background: white;
-      padding: 30px;
-      border-radius: var(--radius);
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
+      background: white; 
+      width: 100%; 
+      max-width: 500px;
+      border-radius: 25px; 
+      padding: 25px; 
+      max-height: 90vh; 
+      overflow-y: auto;
       animation: slideUp 0.3s ease;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     }
 
-    .modal-content h2 {
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
       color: var(--primary);
-      margin-top: 0;
+      font-size: 1.3rem;
     }
 
-    .modal-btn {
-      display: block;
-      width: 100%;
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 15px;
+    .modal-close {
+      background: none;
       border: none;
-      font-family: inherit;
+      font-size: 24px;
+      cursor: pointer;
+      color: #999;
+    }
+
+    .order-list {
+      margin-bottom: 20px; 
+      font-size: 0.9rem;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      border-right: 3px solid var(--primary);
+    }
+
+    .order-item-name {
+      flex: 1;
+    }
+
+    .order-item-qty {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin: 0 10px;
+    }
+
+    .qty-btn {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: var(--primary);
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .order-item-price {
+      font-weight: 900;
+      color: var(--primary);
+      min-width: 50px;
+      text-align: left;
+    }
+
+    .remove-btn {
+      background: #ff4444;
+      color: white;
+      border: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .order-total {
+      background: linear-gradient(135deg, var(--primary), #3a5139);
+      color: white;
+      padding: 15px;
+      border-radius: 12px;
+      margin: 15px 0;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 900;
+      font-size: 1.1rem;
+    }
+
+    .clear-cart-btn {
+      width: 100%;
+      padding: 10px;
+      background: #ffebee;
+      color: #c62828;
+      border: none;
+      border-radius: 8px;
       font-weight: 700;
       cursor: pointer;
-      text-decoration: none;
+      margin-bottom: 15px;
+    }
+
+    input, select, textarea {
+      width: 100%; 
+      padding: 12px; 
+      margin: 8px 0 15px;
+      border: 1px solid #eee; 
+      border-radius: 12px; 
+      background: #f9f9f9;
+      font-family: inherit;
+      font-size: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+
+    .order-confirm-btn {
+      width: 100%; 
+      padding: 15px; 
+      background: var(--primary);
+      color: white; 
+      border: none; 
+      border-radius: 15px; 
+      font-weight: 900; 
+      cursor: pointer;
       font-size: 16px;
       transition: all 0.3s;
     }
 
-    .modal-btn:active {
+    .order-confirm-btn:hover {
+      background: #3a5139;
+    }
+
+    .order-confirm-btn:active {
       transform: scale(0.98);
     }
 
-    .btn-call { 
-      background: var(--primary); 
-      color: white; 
-    }
-
-    .btn-call:hover {
-      background: #1a2818;
-    }
-
-    .btn-wa { 
-      background: #25D366; 
-      color: white; 
-    }
-
-    .btn-wa:hover {
-      background: #1da853;
-    }
-
-    .btn-close {
-      background: none;
-      border: none;
+    .cancel-btn {
+      width: 100%; 
+      background: none; 
+      border: none; 
+      margin-top: 10px; 
       color: #999;
-      font-size: 14px;
-      margin-top: 10px;
       cursor: pointer;
+      padding: 10px;
     }
 
     /* Animations */
-    @keyframes fadeInUp {
+    @keyframes slideUp {
       from { 
         opacity: 0; 
-        transform: translateY(20px); 
+        transform: translateY(30px); 
       }
       to { 
         opacity: 1; 
@@ -330,155 +448,346 @@
       to { opacity: 1; }
     }
 
-    @keyframes slideUp {
-      from { 
-        opacity: 0; 
-        transform: translateY(30px); 
-      }
-      to { 
-        opacity: 1; 
-        transform: translateY(0); 
-      }
-    }
-
     /* Responsive */
     @media (max-width: 480px) {
-      .container {
-        padding: 15px;
-      }
-
-      h1 {
-        font-size: 28px;
-      }
-
-      .bento-grid {
-        gap: 12px;
-      }
-
-      .bento-item {
-        padding: 20px;
+      .grid { 
+        grid-template-columns: repeat(2, 1fr); 
       }
 
       .modal-content {
         padding: 20px;
       }
+
+      .cart-float {
+        bottom: 15px;
+        left: 15px;
+        right: 15px;
+        padding: 12px 20px;
+      }
     }
 
     @media (min-width: 768px) {
-      .bento-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .container {
-        max-width: 800px;
+      .grid { 
+        grid-template-columns: repeat(4, 1fr); 
       }
     }
   </style>
 </head>
-
 <body>
 
-  <!-- شريط العروض -->
-  <div class="promo-bar">
-    <div class="promo-track">
-      <span class="promo-item">✨ عرض الاثنين: اطلب فطيرة واحصل على الثانية مجاناً ✨</span>
-      <span class="promo-item">🥐 معجنات طازة يومياً من الفرن إليك 🥐</span>
-      <span class="promo-item">✨ عروض حصرية لمتابعينا على السناب ✨</span>
-      <span class="promo-item">✨ عرض الاثنين: اطلب صاروخ واحصل على الثانية مجاناً ✨</span>
-      <span class="promo-item">🌟 كادر قوي جداً 🌟</span>
+  <!-- Header -->
+  <header>
+    <div class="logo-area">
+      <div class="logo-mark">N</div>
+      <div class="brand-name">نيشا NEESHA</div>
     </div>
+    <div class="header-subtitle">اطلب الآن وسنصلك</div>
+  </header>
+
+  <!-- Categories Navigation -->
+  <nav class="cats-nav" id="catsNav"></nav>
+
+  <!-- Menu -->
+  <main class="menu-wrap" id="menuWrap"></main>
+
+  <!-- Cart Float Button -->
+  <div class="cart-float" id="cartFloat" onclick="openModal()">
+    <div class="cart-left">
+      <span>🛒</span>
+      <span class="cart-count" id="cartCount">0</span>
+      <span style="font-weight: 700;">سلة الطلبات</span>
+    </div>
+    <div id="cartTotal" style="font-weight: 900;">0 ر.س</div>
   </div>
 
-  <div class="container">
-    <!-- الرأس -->
-    <header class="header">
-      <div class="logo-container">
-        <img src="https://cdn-icons-png.flaticon.com/512/3014/3014534.png" alt="Neesha Logo" onerror="this.src='🥐'">
-      </div>
-      <h1>نيشا</h1>
-      <div class="subtitle">Selected Pastries | معجنات مختارة بعناية</div>
-    </header>
-
-    <!-- شبكة Bento -->
-    <div class="bento-grid">
-      <!-- زر الطلب الرئيسي -->
-      <a href="store.html" class="bento-item large">
-        <div class="icon-box">🛒</div>
-        <div class="title">اطلب الآن</div>
-      </a>
-
-      <!-- المنيو -->
-      <a href="https://drive.google.com/file/d/1L36Z-hx735bBN0PDGL42rwaYL5H4dxpi/view" target="_blank" class="bento-item">
-        <div class="icon-box">📜</div>
-        <div class="title">المنيو</div>
-        <div class="desc">قائمة الطعام</div>
-      </a>
-
-      <!-- الموقع -->
-      <a href="https://maps.google.com" target="_blank" class="bento-item">
-        <div class="icon-box">📍</div>
-        <div class="title">موقعنا</div>
-        <div class="desc">زرنا في الفرع</div>
-      </a>
-
-      <!-- التواصل -->
-      <button onclick="openModal()" class="bento-item" style="border: none; background: var(--card-bg); cursor: pointer;">
-        <div class="icon-box">📞</div>
-        <div class="title">تواصل معنا</div>
-        <div class="desc">دائماً في خدمتك</div>
-      </button>
-
-      <!-- التقييم -->
-      <div class="bento-item">
-        <div class="icon-box">⭐</div>
-        <div class="title">4.9/5</div>
-        <div class="desc">تقييم عملائنا</div>
-      </div>
-    </div>
-
-    <!-- مراجعات العملاء -->
-    <section class="reviews-section">
-      <h3>ماذا يقولون عن نيشا؟</h3>
-      <div class="review-bubble">"المعجنات خفيفة جداً والشاورما طعمه خيالي!"</div>
-      <div class="review-bubble">"أفضل مكان للمعجنات في المنطقة بدون منازع."</div>
-      <div class="review-bubble">"الخدمة سريعة والطعم طازج دائماً."</div>
-    </section>
-
-    <!-- أزرار التواصل الاجتماعي -->
-    <div class="social-links">
-      <a href="https://tiktok.com/@neesha_sa" target="_blank" class="social-circle" title="TikTok">📱</a>
-      <a href="https://instagram.com/neesha.sa" target="_blank" class="social-circle" title="Instagram">📸</a>
-      <a href="https://snapchat.com/add/neesha_2026" target="_blank" class="social-circle" title="Snapchat">👻</a>
-    </div>
-  </div>
-
-  <!-- Modal للتواصل -->
-  <div class="modal-overlay" id="contactModal">
+  <!-- Order Modal -->
+  <div class="modal" id="orderModal">
     <div class="modal-content">
-      <h2>تواصل مباشرة</h2>
-      <p style="color: #666; margin: 15px 0;">اختر الوسيلة المناسبة لك</p>
-      
-      <a href="tel:+966558608699" class="modal-btn btn-call">📞 اتصال هاتفي</a>
-      <a href="https://wa.me/966558608699" target="_blank" class="modal-btn btn-wa">💬 محادثة واتساب</a>
-      <button onclick="closeModal()" class="btn-close">إلغاء</button>
+      <div class="modal-header">
+        <h2>🛒 سلة الطلبات</h2>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+
+      <div class="order-list" id="orderList"></div>
+
+      <div class="order-total">
+        <span>الإجمالي:</span>
+        <span id="totalPrice">0 ر.س</span>
+      </div>
+
+      <button class="clear-cart-btn" onclick="clearCart()">🗑️ تنظيف السلة</button>
+
+      <form id="orderForm" style="display: none;">
+        <label>الاسم *</label>
+        <input type="text" id="cName" placeholder="مثال: محمد أحمد" required>
+
+        <label>رقم الجوال *</label>
+        <input type="tel" id="cPhone" placeholder="05xxxxxxxx" required>
+
+        <label>نوع الاستلام</label>
+        <select id="cType">
+          <option value="pickup">🏪 استلام من الفرع</option>
+          <option value="delivery">🚗 توصيل للموقع</option>
+        </select>
+
+        <label id="addressLabel" style="display: none;">العنوان</label>
+        <textarea id="cAddress" placeholder="أدخل عنوان التوصيل" style="display: none; resize: none;" rows="2"></textarea>
+
+        <label>ملاحظات إضافية</label>
+        <textarea id="cNotes" placeholder="مثال: بدون بصل، إضافة صلصة..." style="resize: none;" rows="2"></textarea>
+
+        <button type="button" class="order-confirm-btn" onclick="sendWhatsApp()">📤 إرسال الطلب عبر واتساب</button>
+        <button type="button" class="cancel-btn" onclick="closeModal()">إلغاء</button>
+      </form>
     </div>
   </div>
 
   <script>
+    const WA_NUM = "966558608699";
+    let cart = {};
+
+    // بيانات المنتجات
+    const MENU_DATA = [
+      { section: "🥙 المناقيش", items: [
+        { name: "مناقيش دجاج", price: 12, img: "https://raw.githubusercontent.com/obad-omar/naisha/c357f8239142717af50a264157216225db140449/images/WhatsApp%20Image%202026-01-29%20at%2011.25.34%20PM.jpeg" },
+        { name: "مناقيش مكس أجبان", price: 12, img: "https://raw.githubusercontent.com/obad-omar/naisha/c357f8239142717af50a264157216225db140449/images/WhatsApp%20Image%202026-01-29%20at%2011.57.10%20PM.jpeg" },
+        { name: "مناقيش زعتر", price: 9, img: "https://raw.githubusercontent.com/obad-omar/naisha/c357f8239142717af50a264157216225db140449/images/WhatsApp%20Image%202026-01-29%20at%2011.35.02%20PM.jpeg" },
+        { name: "مناقيش محمرة", price: 9, img: "https://raw.githubusercontent.com/obad-omar/naisha/c357f8239142717af50a264157216225db140449/images/WhatsApp%20Image%202026-01-30%20at%2012.01.16%20AM.jpeg" },
+        { name: "مناقيش لبنة", price: 9, img: "https://raw.githubusercontent.com/obad-omar/naisha/c357f8239142717af50a264157216225db140449/images/WhatsApp%20Image%202026-01-29%20at%2011.52.32%20PM.jpeg" },
+        { name: "مناقيش عكاوي", price: 9, img: "https://raw.githubusercontent.com/obad-omar/naisha/c357f8239142717af50a264157216225db140449/images/WhatsApp%20Image%202026-01-29%20at%2011.56.51%20PM.jpeg" },
+        { name: "مناقيش جبن سائل", price: 9, img: "https://raw.githubusercontent.com/obad-omar/naisha/c357f8239142717af50a264157216225db140449/images/WhatsApp%20Image%202026-01-29%20at%2011.58.52%20PM.jpeg" }
+      ]},
+      { section: "🐝 الخلية", items: [
+        { name: "خلية كلاسيك صغير", price: 16, img: "https://images.unsplash.com/photo-1519869325930-281384150729?w=300" },
+        { name: "خلية كلاسيك كبير", price: 35, img: "https://images.unsplash.com/photo-1519869325930-281384150729?w=300" },
+        { name: "سينابون صغير", price: 18, img: "https://via.placeholder.com/150?text=سينابون" },
+        { name: "سينابون كبير", price: 38, img: "https://via.placeholder.com/150?text=سينابون" }
+      ]},
+      { section: "🥐 ميني معجنات", items: [
+        { name: "ميني أقمار", price: 9, img: "https://via.placeholder.com/150?text=ميني" },
+        { name: "أنصاف قمر دجاج", price: 9, img: "https://via.placeholder.com/150?text=قمر" },
+        { name: "أنصاف قمر جبن", price: 9, img: "https://via.placeholder.com/150?text=قمر" },
+        { name: "ميني كاب", price: 9, img: "https://via.placeholder.com/150?text=كاب" }
+      ]},
+      { section: "➕ إضافات", items: [
+        { name: "سمبوسة جبن", price: 9, img: "https://via.placeholder.com/150?text=سمبوسة" },
+        { name: "سمبوسة دجاج", price: 9, img: "https://via.placeholder.com/150?text=سمبوسة" },
+        { name: "حساوي", price: 10, img: "https://via.placeholder.com/150?text=حساوي" },
+        { name: "أنصاف حساوي", price: 9, img: "https://via.placeholder.com/150?text=حساوي" },
+        { name: "بسبوسة", price: 10, img: "https://via.placeholder.com/150?text=بسبوسة" },
+        { name: "ورق عنب", price: 30, img: "https://raw.githubusercontent.com/obad-omar/naisha/9bc9b7726a8d2134cae2c7f447121215b975ea1a/images/WhatsApp%20Image%202026-01-21%20at%209.24.05%20PM%20(1).jpeg" },
+        { name: "حلا نيشا", price: 10, img: "https://via.placeholder.com/150?text=حلا" }
+      ]},
+      { section: "🍳 حمسات", items: [
+        { name: "حمسة دجاج", price: 12, img: "https://via.placeholder.com/150?text=حمسة" },
+        { name: "حمسة لحم", price: 13, img: "https://via.placeholder.com/150?text=حمسة" },
+        { name: "حمسة بيض", price: 11, img: "https://via.placeholder.com/150?text=حمسة" },
+        { name: "حمسة خضار", price: 11, img: "https://via.placeholder.com/150?text=حمسة" },
+        { name: "بوكس صباحيات", price: 60, img: "https://via.placeholder.com/150?text=بوكس" },
+        { name: "بوكس أمسية", price: 100, img: "https://via.placeholder.com/150?text=بوكس" }
+      ]},
+      { section: "🍕 البيتزا", items: [
+        { name: "بيتزا دجاج", price: 13, img: "https://raw.githubusercontent.com/obad-omar/naisha/9bc9b7726a8d2134cae2c7f447121215b975ea1a/images/WhatsApp%20Image%202026-01-21%20at%209.24.07%20PM.jpeg" },
+        { name: "بيتزا ببروني", price: 16, img: "https://raw.githubusercontent.com/obad-omar/naisha/07db7cffb2fd672b11d84d1cb48278c824595826/images/WhatsApp%20Image%202026-01-27%20at%2011.51.14%20PM.jpeg" },
+        { name: "بيتزا نقانق", price: 16, img: "https://raw.githubusercontent.com/obad-omar/naisha/07db7cffb2fd672b11d84d1cb48278c824595826/images/WhatsApp%20Image%202026-01-27%20at%2011.53.42%20PM.jpeg" },
+        { name: "بيتزا لحم", price: 18, img: "https://raw.githubusercontent.com/obad-omar/naisha/07db7cffb2fd672b11d84d1cb48278c824595826/images/WhatsApp%20Image%202026-01-27%20at%2011.55.03%20PM.jpeg" },
+        { name: "بيتزا رانش", price: 18, img: "https://raw.githubusercontent.com/obad-omar/naisha/07db7cffb2fd672b11d84d1cb48278c824595826/images/WhatsApp%20Image%202026-01-27%20at%2011.58.54%20PM.jpeg" },
+        { name: "بيتزا مارجريتا", price: 16, img: "https://raw.githubusercontent.com/obad-omar/naisha/c578c458b1a49211a3eedde8deea8d139e51fbd7/images/WhatsApp%20Image%202026-01-28%20at%2012.15.16%20AM.jpeg" },
+        { name: "بيتزا شاورما", price: 17, img: "https://via.placeholder.com/150?text=بيتزا" }
+      ]},
+      { section: "🌯 شاورما", items: [
+        { name: "شاورما صاروخ", price: 12, img: "https://via.placeholder.com/150?text=شاورما" },
+        { name: "عربي كبير", price: 28, img: "https://via.placeholder.com/150?text=عربي" },
+        { name: "عربي صغير", price: 14, img: "https://via.placeholder.com/150?text=عربي" },
+        { name: "ساندوتش شاورما", price: 7, img: "https://via.placeholder.com/150?text=ساندوتش" },
+        { name: "شاورما عائلي", price: 45, img: "https://via.placeholder.com/150?text=عائلي" },
+        { name: "شاورما نيشا", price: 100, img: "https://via.placeholder.com/150?text=نيشا" }
+      ]},
+      { section: "📦 بوكسات", items: [
+        { name: "بوكس لمتنا", price: 23, img: "https://via.placeholder.com/150?text=بوكس" },
+        { name: "بوكس جمعتنا", price: 49, img: "https://via.placeholder.com/150?text=بوكس" },
+        { name: "بوكس نيشا", price: 60, img: "https://via.placeholder.com/150?text=بوكس" },
+        { name: "بوكس نيشا بلس", price: 80, img: "https://via.placeholder.com/150?text=بوكس" }
+      ]}
+    ];
+
+    let activeCategory = 0;
+
+    function renderCategories() {
+      const nav = document.getElementById('catsNav');
+      nav.innerHTML = MENU_DATA.map((cat, idx) => 
+        `<button class="cat-item ${idx === 0 ? 'active' : ''}" onclick="switchCategory(${idx})">${cat.section}</button>`
+      ).join('');
+    }
+
+    function renderMenu() {
+      const menu = document.getElementById('menuWrap');
+      const section = MENU_DATA[activeCategory];
+      
+      menu.innerHTML = `
+        <h2 class="section-title">${section.section}</h2>
+        <div class="grid">
+          ${section.items.map(item => `
+            <div class="card">
+              <img src="${item.img}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/150?text=${item.name}'">
+              <div class="card-body">
+                <div class="card-name">${item.name}</div>
+                <div class="card-price">${item.price} ر.س</div>
+              </div>
+              <button class="add-btn" onclick="addToCart('${item.name}', ${item.price})">+</button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function switchCategory(idx) {
+      activeCategory = idx;
+      document.querySelectorAll('.cat-item').forEach((el, i) => {
+        el.classList.toggle('active', i === idx);
+      });
+      renderMenu();
+    }
+
+    function addToCart(name, price) {
+      if (!cart[name]) {
+        cart[name] = { price, qty: 0 };
+      }
+      cart[name].qty++;
+      updateCart();
+    }
+
+    function updateCart() {
+      const total = Object.values(cart).reduce((sum, item) => sum + (item.qty * item.price), 0);
+      const count = Object.values(cart).reduce((sum, item) => sum + item.qty, 0);
+      
+      document.getElementById('cartCount').textContent = count;
+      document.getElementById('cartTotal').textContent = total + ' ر.س';
+      
+      if (count > 0) {
+        document.getElementById('cartFloat').classList.add('active');
+      } else {
+        document.getElementById('cartFloat').classList.remove('active');
+      }
+
+      renderOrderList();
+    }
+
+    function renderOrderList() {
+      const list = document.getElementById('orderList');
+      const total = Object.values(cart).reduce((sum, item) => sum + (item.qty * item.price), 0);
+
+      if (Object.keys(cart).length === 0) {
+        list.innerHTML = '<p style="text-align: center; color: #999;">السلة فارغة</p>';
+        document.getElementById('orderForm').style.display = 'none';
+        return;
+      }
+
+      list.innerHTML = Object.entries(cart).map(([name, item]) => `
+        <div class="order-item">
+          <div class="order-item-name">${name}</div>
+          <div class="order-item-qty">
+            <button class="qty-btn" onclick="changeQty('${name}', -1)">−</button>
+            <span>${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty('${name}', 1)">+</button>
+          </div>
+          <div class="order-item-price">${item.qty * item.price} ر.س</div>
+          <button class="remove-btn" onclick="removeFromCart('${name}')">✕</button>
+        </div>
+      `).join('');
+
+      document.getElementById('totalPrice').textContent = total + ' ر.س';
+      document.getElementById('orderForm').style.display = 'block';
+    }
+
+    function changeQty(name, change) {
+      if (cart[name]) {
+        cart[name].qty += change;
+        if (cart[name].qty <= 0) {
+          delete cart[name];
+        }
+        updateCart();
+      }
+    }
+
+    function removeFromCart(name) {
+      delete cart[name];
+      updateCart();
+    }
+
+    function clearCart() {
+      if (confirm('هل تريد حذف جميع الطلبات؟')) {
+        cart = {};
+        updateCart();
+      }
+    }
+
     function openModal() {
-      document.getElementById('contactModal').classList.add('active');
+      if (Object.keys(cart).length > 0) {
+        document.getElementById('orderModal').classList.add('active');
+      }
     }
 
     function closeModal() {
-      document.getElementById('contactModal').classList.remove('active');
+      document.getElementById('orderModal').classList.remove('active');
     }
 
-    // إغلاق Modal عند النقر خارجه
-    document.getElementById('contactModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeModal();
+    document.getElementById('cType').addEventListener('change', function() {
+      const addressLabel = document.getElementById('addressLabel');
+      const addressInput = document.getElementById('cAddress');
+      if (this.value === 'delivery') {
+        addressLabel.style.display = 'block';
+        addressInput.style.display = 'block';
+      } else {
+        addressLabel.style.display = 'none';
+        addressInput.style.display = 'none';
       }
     });
+
+    function sendWhatsApp() {
+      const name = document.getElementById('cName').value.trim();
+      const phone = document.getElementById('cPhone').value.trim();
+      const type = document.getElementById('cType').value;
+      const address = document.getElementById('cAddress').value.trim();
+      const notes = document.getElementById('cNotes').value.trim();
+
+      if (!name) {
+        alert('فضلاً أدخل اسمك');
+        return;
+      }
+      if (!phone) {
+        alert('فضلاً أدخل رقم الجوال');
+        return;
+      }
+
+      let message = `🍕 *طلب جديد من نيشا* 🍕\n\n`;
+      message += `👤 *الاسم:* ${name}\n`;
+      message += `📱 *الجوال:* ${phone}\n`;
+      message += `📍 *نوع الاستلام:* ${type === 'delivery' ? 'توصيل للموقع' : 'استلام من الفرع'}\n`;
+      if (address) message += `📌 *العنوان:* ${address}\n`;
+      if (notes) message += `📝 *ملاحظات:* ${notes}\n`;
+      message += `\n━━━━━━━━━━━━━━━━\n*📋 الطلبات:*\n`;
+
+      Object.entries(cart).forEach(([name, item]) => {
+        message += `• ${name} × ${item.qty} = ${item.qty * item.price} ر.س\n`;
+      });
+
+      const total = Object.values(cart).reduce((sum, item) => sum + (item.qty * item.price), 0);
+      const count = Object.values(cart).reduce((sum, item) => sum + item.qty, 0);
+      message += `\n━━━━━━━━━━━━━━━━\n*💰 الإجمالي: ${total} ر.س*\n*📦 عدد الأصناف: ${count}*\n`;
+
+      const waUrl = `https://wa.me/${WA_NUM}?text=${encodeURIComponent(message)}`;
+      window.open(waUrl, '_blank');
+      
+      cart = {};
+      updateCart();
+      closeModal();
+      document.getElementById('orderForm').reset();
+    }
+
+    // Initialize
+    renderCategories();
+    renderMenu();
   </script>
 
 </body>
