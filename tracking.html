@@ -463,7 +463,24 @@
     const orderType = urlParams.get('type') || localStorage.getItem('orderType') || 'pickup';
     const orderData = JSON.parse(localStorage.getItem('orderData') || '{}');
 
-    let timeRemaining = 20 * 60; // 20 minutes in seconds
+    // Get or initialize order start time
+    let orderStartTime = localStorage.getItem('orderStartTime');
+    if (!orderStartTime) {
+      orderStartTime = Date.now();
+      localStorage.setItem('orderStartTime', orderStartTime);
+    } else {
+      orderStartTime = parseInt(orderStartTime);
+    }
+
+    // Calculate time remaining based on start time
+    function getTimeRemaining() {
+      const elapsedMs = Date.now() - orderStartTime;
+      const elapsedSeconds = Math.floor(elapsedMs / 1000);
+      const totalSeconds = 20 * 60; // 20 minutes
+      const remaining = Math.max(0, totalSeconds - elapsedSeconds);
+      return remaining;
+    }
+
     let currentStep = 0;
 
     // Define timeline steps
@@ -484,7 +501,12 @@
 
     // Generate order number
     function generateOrderNumber() {
-      return '#' + Math.floor(Math.random() * 9000) + 1000;
+      let orderNum = localStorage.getItem('orderNumber');
+      if (!orderNum) {
+        orderNum = '#' + Math.floor(Math.random() * 9000) + 1000;
+        localStorage.setItem('orderNumber', orderNum);
+      }
+      return orderNum;
     }
 
     // Render timeline
@@ -518,18 +540,18 @@
 
     // Update timer
     function updateTimer() {
+      const timeRemaining = getTimeRemaining();
       const minutes = Math.floor(timeRemaining / 60);
       const seconds = timeRemaining % 60;
       document.getElementById('timerText').textContent = 
         `${minutes} دقيقة و ${seconds} ثانية`;
 
-      if (timeRemaining > 0) {
-        timeRemaining--;
-      }
+      return timeRemaining;
     }
 
     // Auto advance steps
     function autoAdvanceSteps() {
+      const timeRemaining = getTimeRemaining();
       const stepInterval = (20 * 60) / (steps.length - 1);
       const elapsedTime = (20 * 60) - timeRemaining;
       const newStep = Math.floor(elapsedTime / stepInterval);
@@ -570,6 +592,8 @@
     function newOrder() {
       localStorage.removeItem('orderType');
       localStorage.removeItem('orderData');
+      localStorage.removeItem('orderStartTime');
+      localStorage.removeItem('orderNumber');
       window.location.href = './store.html';
     }
 
